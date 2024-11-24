@@ -1,15 +1,16 @@
-import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { DuoHeart } from "./DuoHeart";
-import { DuoCross } from "./DuoCross";
 import { DuoProgress } from "./DuoProgress";
+import DuoCross from "./DuoCross";
+import { DuoChoice } from "./DouChoice";
+import { DuoButton } from "./DuoButton";
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     // padding: 16,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
   },
   title: {
     fontFamily: "Nunito-Bold",
@@ -22,11 +23,13 @@ export function DuoHeader(){
   return (
     <View>
       <View style={styles.row}>
-        <DuoCross />
-        <DuoProgress />
-        <DuoHeart />
-        <DuoHeart />
+        <DuoCross></DuoCross>
+        <DuoProgress></DuoProgress>
+        <DuoHeart></DuoHeart>
+        <DuoHeart></DuoHeart>
       </View>
+      <DuoButton></DuoButton>
+      <DuoChoice></DuoChoice>
     </View>
   );
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Pressable, StyleSheet, View,Text } from 'react-native';
 import { ThemedText } from './ThemedText';
 
