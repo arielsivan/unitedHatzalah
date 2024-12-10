@@ -1,3 +1,4 @@
+import React from 'react';
 import { Pressable, StyleSheet, View, Text } from 'react-native';
 
 export function DuoChoice() {

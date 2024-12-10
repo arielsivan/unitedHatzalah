@@ -1,5 +1,6 @@
 import { Button, Pressable, StyleSheet, View,Text } from 'react-native';
 import { ThemedText } from './ThemedText';
+import React from 'react';
 
 
 export function DuoButton() {
