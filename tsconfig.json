@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/(tabs)/duo.jsx"  ]
+, "app/(tabs)/duo.jsx", "app/login/sign-up.jsx", "app/login/sign-in.tsx", "components/FormField.jsx"  ]
 }
