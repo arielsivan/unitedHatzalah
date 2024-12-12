@@ -1,10 +1,8 @@
 import React from "react";
 import { Button, Pressable, StyleSheet, View,Text } from 'react-native';
-import { ThemedText } from './ThemedText';
 
 
 export function DuoButton() {
-    // const color = props.color;
     return (
         <View>
         <Pressable 
@@ -14,15 +12,6 @@ export function DuoButton() {
                 ]}
                 onPress={() => {}}>
             <Text style={styles.text}>Hiii</Text>
-        </Pressable>
-        <Text></Text>
-        <Pressable 
-                style={({ pressed }) => [
-                    styles.round,
-                    pressed && styles.buttonRoundPressed,
-                ]}
-                onPress={() => {}}>
-            <ThemedText style={styles.text}>💉</ThemedText>
         </Pressable>
         </View>
     );
