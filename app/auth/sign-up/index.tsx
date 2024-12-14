@@ -33,7 +33,7 @@ export default function SignUp() {
         createUserWithEmailAndPassword(auth,email,password)
         .then((userCredential : any) => {
             const user = userCredential.user;
-            router.replace('/(tabs)/duo');
+            router.replace('/(tabs)/learning');
             console.log('User signed in: ', user.email);
             
         })

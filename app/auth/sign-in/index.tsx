@@ -31,7 +31,7 @@ export default function SignIn() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                router.replace('/(tabs)/duo');
+                router.replace('/(tabs)/learning');
                 console.log('User signed in: ', user.email);
             })
             .catch((err) => {

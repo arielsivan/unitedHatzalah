@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View, Text, Pressable, Modal, Alert } from 'react-native';
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';

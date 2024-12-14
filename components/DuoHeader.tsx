@@ -28,7 +28,9 @@ export function DuoHeader(){
         <DuoHeart></DuoHeart>
         <DuoHeart></DuoHeart>
       </View>
-      <DuoButton></DuoButton>
+      <DuoButton title={""} handlePress={function (): void {
+              throw new Error("Function not implemented.");
+          } }></DuoButton>
       <DuoChoice></DuoChoice>
     </View>
   );

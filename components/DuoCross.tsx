@@ -1,5 +1,5 @@
 import Svg, { Path } from "react-native-svg";
-import { DuoChoice } from "./DouChoice";
+import React from "react";
 
 export const CROSS_SIZE = 24;
 

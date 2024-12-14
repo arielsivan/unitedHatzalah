@@ -1,5 +1,4 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
-import { ThemedText } from './ThemedText';
 import { useEffect, useState } from 'react';
 import { useColorAdjust } from '@/hooks/useColorAdjust';
 
@@ -30,7 +29,7 @@ export default function LessonButton(props : Props) {
                         {backgroundColor : props.backgroundColor}
                     ]}
                     onPress={() => {}}>
-                <ThemedText style={styles.text}>{text}</ThemedText>
+                <Text style={styles.text}>{text}</Text>
             </Pressable>
         </View>
     )

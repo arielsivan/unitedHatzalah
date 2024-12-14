@@ -10,23 +10,14 @@ export function DuoButton(props : Props) {
 
     return (
         <View>
-        <Pressable 
-                style={({ pressed }) => [
-                    styles.button,
-                    pressed && styles.buttonPressed,
-                ]}
-                onPress={props.handlePress}>
-            <Text style={styles.text}>{props.title}</Text>
-        </Pressable>
-        <Text></Text>
-        <Pressable 
-                style={({ pressed }) => [
-                    styles.round,
-                    pressed && styles.buttonRoundPressed,
-                ]}
-                onPress={() => {}}>
-            <Text style={styles.text}>💉</Text>
-        </Pressable>
+            <Pressable 
+                    style={({ pressed }) => [
+                        styles.button,
+                        pressed && styles.buttonPressed,
+                    ]}
+                    onPress={props.handlePress}>
+                <Text style={styles.text}>{props.title}</Text>
+            </Pressable>
         </View>
     );
 }
