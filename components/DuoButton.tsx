@@ -1,10 +1,9 @@
 import React from "react";
 import { Button, Pressable, StyleSheet, View,Text } from 'react-native';
-import { ThemedText } from './ThemedText';
 
 interface Props { 
     title : string;
-    handelPress : () => void;
+    handlePress : () => void;
 }
 
 export function DuoButton(props : Props) {
@@ -26,7 +25,7 @@ export function DuoButton(props : Props) {
                     pressed && styles.buttonRoundPressed,
                 ]}
                 onPress={() => {}}>
-            <ThemedText style={styles.text}>💉</ThemedText>
+            <Text style={styles.text}>💉</Text>
         </Pressable>
         </View>
     );
