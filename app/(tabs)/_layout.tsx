@@ -24,6 +24,13 @@ export default function TabLayout() {
                     <MaterialCommunityIcons name="bird" size={24} color={Colors.accent} />
             }}
         />
+        <Tabs.Screen name="profile" 
+            options={{
+                title : 'Profile',
+                tabBarIcon : () => 
+                    <Ionicons name="person" size={24} color={Colors.accent} />
+            }}
+        />
     </Tabs>
   );
 }
