@@ -29,6 +29,7 @@ export const Colors = {
     secondary: "#54595F",
     text: "#7A7A7A",
     accent: "#F47920",
+    orange: "#F47920",
     blue: "#4054B2",
     white: "#FFFFFF",
 };
