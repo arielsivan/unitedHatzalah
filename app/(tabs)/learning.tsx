@@ -20,36 +20,6 @@ export default function Learning() {
 
     return (
         <View style={{ flex: 1, backgroundColor : '' }}>
-            <View
-                style={{
-                    backgroundColor: '#e5cbba',
-                    width: '100%',
-                    flexDirection: 'row',
-                    padding: 10,
-                    paddingTop: 30,
-                }}
-            >
-                <View
-                    style={{
-                        marginLeft: 'auto',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                    }}
-                >
-                    <DuoHeart />
-                    <Text
-                        style={{
-                            fontFamily: 'SpaceMono',
-                            marginLeft: 10,
-                            fontSize: 25,
-                            color: 'red',
-                        }}
-                    >
-                        5
-                    </Text>
-                </View>
-            </View>
             <ScrollView
                 style={{ flex: 1 }}
                 contentContainerStyle={{
