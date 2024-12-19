@@ -1,5 +1,5 @@
-import React from "react";
-import Svg, { Path, Circle } from "react-native-svg";
+import React from 'react';
+import Svg, { Path, Circle } from 'react-native-svg';
 
 export function Heart({ size = 100 }) {
   return (

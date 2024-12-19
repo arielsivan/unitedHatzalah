@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
 
-const DiamondIcon  = ({
+const DiamondIcon = ({
   size = 100, // Default size for the icon
   strokeColor = '#FFFFFF', // Default stroke color
   fillColor = '#53ADF0', // Default fill color
@@ -29,6 +29,5 @@ const DiamondIcon  = ({
     </View>
   );
 };
-
 
 export default DiamondIcon;

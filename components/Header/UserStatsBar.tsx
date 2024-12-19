@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     padding: 10,
-    paddingTop : 30,
+    paddingTop: 30,
     backgroundColor: Colors.orange,
   },
   statItem: {

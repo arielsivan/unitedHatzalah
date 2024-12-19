@@ -1,54 +1,42 @@
 import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
-import { DuoButton } from '@/components/DuoButton';
 import DuoRoundButton from '@/components/DuoRoundButton';
-import { DuoHeart } from '@/components/DuoHeart';
+import mockItems from '@/mocks/items';
 
 export default function Learning() {
-    const items = [
-        { emoji: '💉', background: '#9de19a' },
-        { emoji: '🩸', background: '#a4c5ea' },
-        { emoji: '💊', background: '#bca9e1' },
-        { emoji: '🩺', background: '#f5c6aa' }, // Stethoscope
-        { emoji: '🏥', background: '#ge1d8b2' }, // Hospital
-        { emoji: '🩹', background: '#cfe7d7' }, // Bandage
-        { emoji: '🛏️', background: '#e6abb7' }, // Bed
-        { emoji: '🚑', background: '#d6e5f3' }, // Ambulance
-        { emoji: '⚕️', background: '#a6e1e1' }, // Medical symbol
-        { emoji: '🥼', background: '#fff5ba' }, // Lab coat
-    ];
+  const items = mockItems;
 
-    return (
-        <View style={{ flex: 1, backgroundColor : '' }}>
-            <ScrollView
-                style={{ flex: 1 }}
-                contentContainerStyle={{
-                    margin: 10,
-                    marginTop: 20,
-                    paddingBottom: 50,
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
+  return (
+    <View className="flex-1 bg-transparent">
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{
+          margin: 10,
+          marginTop: 20,
+          paddingBottom: 50,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        {items.map((item, key) => {
+          const step = 70;
+          const snakeMargin = step * Math.abs((key % 4) - 2) - step;
+
+          return (
+            <View
+              key={key}
+              style={{
+                marginLeft: snakeMargin,
+              }}
             >
-                {items.map((item, key) => {
-                    const step = 70;
-                    const snakeMargin = step * Math.abs((key % 4) - 2) - step;
-
-                    return (
-                        <View
-                            key={key}
-                            style={{
-                                marginLeft: snakeMargin,
-                            }}
-                        >
-                            <DuoRoundButton
-                                text={item.emoji}
-                                backgroundColor={item.background}
-                            />
-                        </View>
-                    );
-                })}
-            </ScrollView>
-        </View>
-    );
+              <DuoRoundButton
+                text={item.emoji}
+                backgroundColor={item.background}
+              />
+            </View>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
 }
