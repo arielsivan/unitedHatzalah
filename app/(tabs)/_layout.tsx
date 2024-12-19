@@ -1,8 +1,8 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import React from "react";
 
-import { Colors } from '@/constants/Colors';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Colors } from "@/constants/Colors";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   return (
@@ -14,7 +14,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Index',
+          title: "Index",
           tabBarIcon: () => (
             <Ionicons name="book" size={24} color={Colors.accent} />
           ),
@@ -23,7 +23,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="learning"
         options={{
-          title: 'Duo',
+          title: "Duo",
           tabBarIcon: () => (
             <MaterialCommunityIcons
               name="bird"
@@ -36,9 +36,22 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: "Profile",
           tabBarIcon: () => (
             <Ionicons name="person" size={24} color={Colors.accent} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="events"
+        options={{
+          title: "אירועים",
+          tabBarIcon: () => (
+            <MaterialCommunityIcons
+              name="car"
+              size={24}
+              color={Colors.accent}
+            />
           ),
         }}
       />
