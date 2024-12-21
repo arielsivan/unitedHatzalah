@@ -13,6 +13,7 @@ import { Colors } from '@/constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/configs/FirebaseConfig';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function SignIn() {
   const navigation = useNavigation();
@@ -20,6 +21,9 @@ export default function SignIn() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const login = useAuthStore((state) => state.login);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   useEffect(() => {
     navigation.setOptions({
@@ -30,26 +34,23 @@ export default function SignIn() {
     I18nManager.forceRTL(true);
   }, []);
 
-  const onSignIn = () => {
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/(tabs)/learning');
+    }
+  }, [isAuthenticated]);
+
+  const onSignIn = async () => {
     if (!email || !password) {
       ToastAndroid.show('יש למלא את כל השדות', ToastAndroid.LONG);
       return;
     }
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        router.replace('/(tabs)/learning');
-        console.log('User signed in: ', user.email);
-      })
-      .catch((err) => {
-        const errorCode = err.code;
-        const errorMsg = err.message;
-        console.log(errorCode, errorMsg);
-        if (errorCode === 'auth/invalid-credentials') {
-          ToastAndroid.show(errorMsg, ToastAndroid.LONG);
-        }
-      });
+    try {
+      await login(email, password);
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   return (

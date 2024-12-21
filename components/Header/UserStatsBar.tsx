@@ -4,6 +4,7 @@ import FlameStreak from '@/components/Header/Streak';
 import DiamondIcon from '@/components/Header/Gems';
 import { Heart } from '@/components/Header/Hearts'; // Import the Heart component
 import { Colors } from '@/constants/Colors';
+import { useAuthStore } from '@/stores/authStore';
 
 interface UserStatsProps {
   flameCount?: number;
@@ -11,11 +12,14 @@ interface UserStatsProps {
   heartCount?: number;
 }
 
-const UserStats: React.FC<UserStatsProps> = ({
-  flameCount = 30, // Default flame count
-  diamondCount = 500, // Default diamond count
-  heartCount = 5, // Default heart count
-}) => {
+const UserStats: React.FC<UserStatsProps> = () => {
+    const user = useAuthStore(state => state.user);
+  
+    // Get user stats from the user data (or default if not available)
+    const flameCount = user?.streak; // Default streak value if not available
+    const diamondCount = user?.gems; // Default gems value if not available
+    const heartCount = user?.hearts; // Default hearts value if not available
+
   return (
     <View style={styles.container}>
       {/* Flame Streak */}

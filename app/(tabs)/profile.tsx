@@ -1,82 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Colors } from '../../constants/Colors';
-import { auth, db } from '../../configs/FirebaseConfig';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { getDatabase, ref, get } from 'firebase/database';
-import { Badge, UserProf } from '@/types/data';
-import { doc, getDoc } from 'firebase/firestore';
+import { Badge } from '@/types/data';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function ProfileScreen() {
+    const user = useAuthStore((state) => state.user);
+    
   const badges: Badge[] = [
-    // change later to the user's badges
     { id: 1, title: 'First Lesson', icon: 'star-outline' },
     { id: 2, title: '5 Day Streak', icon: 'flame-outline' },
     { id: 3, title: 'Completed Basics', icon: 'trophy-outline' },
   ];
-
-  const [userData, setUserData] = useState<UserProf>({
-    name: '',
-    email: '',
-    gems: 0,
-    hearts: 0,
-    streak: 0,
-    badges: [],
-  });
-
-  const fetchUserData = async (userId: string) => {
-    try {
-      // Reference the document in the 'users' collection with the specific userId
-      const docRef = doc(db, 'users', userId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        // Document data is available
-        console.log('User data:', docSnap.data());
-        const usr: UserProf = docSnap.data() as UserProf;
-        return usr; // Return the document data
-      } else {
-        // Document does not exist
-        console.log('No such document!');
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        fetchUserData(user.uid).then((userdata) => {
-          if (userdata) {
-            console.log('usr:' + userdata.gems);
-
-            setUserData({
-              name: userdata.name || 'Unknown User', // Fix: access user.displayName safely
-              email: userdata.email || 'No email provided', // Fix: safely access user.email
-              gems: userdata.gems,
-              hearts: userdata.hearts,
-              streak: userdata.streak,
-              badges: badges,
-            });
-          }
-        });
-      } else {
-        setUserData({
-          name: 'Guest',
-          email: 'Not logged in',
-          gems: 0,
-          hearts: 0,
-          streak: 0,
-          badges: [],
-        });
-      }
-    });
-
-    return () => unsubscribe(); // Cleanup on unmount
-  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -89,31 +26,27 @@ export default function ProfileScreen() {
         />
       </View>
 
-      {/* Username and Email */}
-      <Text style={styles.username}>{userData.name}</Text>
-      <Text style={styles.email}>{userData.email}</Text>
-      <Text style={styles.email}>streak : {userData.streak}</Text>
-      <Text style={styles.email}>hearts : {userData.hearts}</Text>
-      <Text style={styles.email}>gems : {userData.gems}</Text>
+      {/* User Information */}
+      <Text style={styles.username}>{user?.name || 'Guest'}</Text>
+      <Text style={styles.email}>{user?.email || 'Not logged in'}</Text>
+      <Text style={styles.email}>Streak: {user?.streak || 0}</Text>
+      <Text style={styles.email}>Hearts: {user?.hearts || 0}</Text>
+      <Text style={styles.email}>Gems: {user?.gems || 0}</Text>
 
       {/* Badges Section */}
       <View style={styles.badgesContainer}>
         <Text style={styles.sectionTitle}>My Badges:</Text>
         <View style={styles.badgesList}>
-          {userData.badges ? (
-            userData.badges.map((badge) => (
-              <View key={badge.id} style={styles.badgeItem}>
-                <Ionicons
-                  name={badge.icon as any}
-                  size={36}
-                  color={Colors.accent}
-                />
-                <Text style={styles.badgeTitle}>{badge.title}</Text>
-              </View>
-            ))
-          ) : (
-            <Text style={{ fontSize: 20 }}>No badges yet</Text>
-          )}
+          {(user?.badges || badges).map((badge) => (
+            <View key={badge.id} style={styles.badgeItem}>
+              <Ionicons
+                name={badge.icon as any}
+                size={36}
+                color={Colors.accent}
+              />
+              <Text style={styles.badgeTitle}>{badge.title}</Text>
+            </View>
+          ))}
         </View>
       </View>
     </ScrollView>
@@ -153,7 +86,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     alignSelf: 'center',
-    color: Colors.text, // change later the light and dark mode
+    color: Colors.text,
   },
   badgesList: {
     flexDirection: 'row',

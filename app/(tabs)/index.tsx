@@ -20,14 +20,20 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
 } from 'react-native-reanimated';
+import { useAuthStore } from '@/stores/authStore';
 
 const HEADER_HEIGHT = 250;
 
 export default function HomeScreen() {
   const router = useRouter();
-  const user = auth.currentUser;
+//   const user = auth.currentUser;
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
+
+
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -49,16 +55,13 @@ export default function HomeScreen() {
     };
   });
 
+
   const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        Alert.alert('התנתקת בהצלחה', 'נחזור בקרוב!');
-        router.push('/(tabs)');
-      })
-      .catch((error) => {
-        console.error('Sign out error: ', error);
-      });
+    logout();
+    Alert.alert('התנתקת בהצלחה', 'נחזור בקרוב!');
+    router.push('/(tabs)');
   };
+
 
   return (
     <View style={styles.container}>

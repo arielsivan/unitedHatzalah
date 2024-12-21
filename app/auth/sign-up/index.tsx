@@ -11,10 +11,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { auth, db } from '@/configs/FirebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { UserProf } from '@/types/data';
-import { doc, setDoc } from 'firebase/firestore';
+
+import { useAuthStore } from '@/stores/authStore';
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -23,6 +21,9 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+
+  const createUser = useAuthStore((state) => state.createUser);
+
 
   useEffect(() => {
     navigation.setOptions({
@@ -33,37 +34,18 @@ export default function SignUp() {
     I18nManager.forceRTL(true);
   }, []);
 
-  const onCreateAccount = () => {
+  const onCreateAccount = async () => {
     if (!email || !password || !fullName) {
       ToastAndroid.show('Please fill all fields', ToastAndroid.LONG);
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential: any) => {
-        const user = userCredential.user;
-        const userData: UserProf = {
-          name: fullName,
-          email: email,
-          gems: 0,
-          hearts: 5,
-          streak: 0,
-          badges: [],
-        };
-        try {
-          await setDoc(doc(db, 'users', user.uid), userData);
-        } catch (err) {
-          console.log('Error:' + err);
-        }
-
-        console.log('User signed in: ', user.email);
-        router.replace('/(tabs)/learning');
-      })
-      .catch((err: any) => {
-        const errorCode = err.code;
-        const errorMsg = err.message;
-        console.log(errorCode, errorMsg);
-      });
+    try {
+      await createUser(email, password, fullName);
+      router.replace('/(tabs)/learning');
+    } catch (error) {
+      console.error('Account creation failed:', error);
+    }
   };
 
   return (
