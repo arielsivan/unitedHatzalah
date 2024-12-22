@@ -1,6 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useState } from 'react';
+import {
+    View,
+    Text,
+    StyleSheet,
+    ScrollView,
+    Image,
+    TouchableOpacity,
+    Modal,
+    Pressable,
+  } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 
 import { Colors } from '../../constants/Colors';
 import { Badge } from '@/types/data';
@@ -8,22 +18,71 @@ import { useAuthStore } from '@/stores/authStore';
 
 export default function ProfileScreen() {
     const user = useAuthStore((state) => state.user);
+    const [profileImage, setProfileImage] = useState<string | null>(null);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+
 
     const badges: Badge[] = [
         { id: 1, title: 'שיעור ראשון', icon: 'star-outline' },
         { id: 2, title: 'רצף של 5 ימים', icon: 'flame-outline' },
         { id: 3, title: 'השלים את הבסיסי', icon: 'trophy-outline' },
     ];
+    const handleChoosePhoto = async () => {
+        const permissionResult =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!permissionResult.granted) {
+          alert('Permission to access media library is required!');
+          return;
+        }
+    
+        const pickerResult = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 1,
+        });
+    
+        if (!pickerResult.canceled && pickerResult.assets?.[0].uri) {
+          setProfileImage(pickerResult.assets[0].uri);
+          setModalVisible(false);
+        }
+      };
+    
+      const handleTakePhoto = async () => {
+        const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+        if (!permissionResult.granted) {
+          alert('Permission to access camera is required!');
+          return;
+        }
+    
+        const cameraResult = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 1,
+        });
+    
+        if (!cameraResult.canceled && cameraResult.assets?.[0].uri) {
+          setProfileImage(cameraResult.assets[0].uri);
+          setModalVisible(false);
+        }
+      };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {/* Avatar Section */}
             <View style={styles.avatarContainer}>
-                <Image
-                    source={{ uri: `https://robohash.org/${user?.name || '34'}` }} // Placeholder image if no avatar
-                    style={styles.avatar}
-                />
-            </View>
+        <Image
+          source={{
+            uri:
+              profileImage || `https://robohash.org/${user?.name || 'default'}`,
+          }}
+          style={styles.avatar}
+        />
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => setModalVisible(true)}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="add-circle" size={30} color={Colors.accent} />
+        </TouchableOpacity>
+      </View>
 
             {/* User Information */}
             <Text style={styles.username}>{user?.name || 'אורח'}</Text>
@@ -44,6 +103,49 @@ export default function ProfileScreen() {
                     <Text style={styles.statText}>יהלומים: {user?.gems || 0}</Text>
                 </View>
             </View>
+
+      {/* Modal for Image Options */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={handleTakePhoto}
+            >
+              <Ionicons name="camera-outline" size={24} color={Colors.accent} />
+              <Text style={styles.modalButtonText}>Take Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={handleChoosePhoto}
+            >
+              <Ionicons name="image-outline" size={24} color={Colors.accent} />
+              <Text style={styles.modalButtonText}>Choose from Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.modalButton, styles.cancelButton]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Ionicons
+                name="close-circle-outline"
+                size={24}
+                color={Colors.secondary}
+              />
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
 
             {/* Badges Section */}
             <View style={styles.badgesContainer}>
@@ -86,12 +188,32 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 0,
     },
+    addButton: {
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 4,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5, // For Android shadow
+    },
     username: {
         fontSize: 28,
         fontWeight: 'bold',
         marginTop: 10,
         color: Colors.text,
     },
+    badgesSection: {
+        alignSelf: 'stretch',
+        marginTop: 20,
+      },
     email: {
         fontSize: 16,
         color: 'gray',
@@ -142,4 +264,28 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: Colors.text,
     },
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+      },
+      modalContent: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+      },
+      modalButton: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        paddingVertical: 15,
+      },
+      cancelButton: {
+        marginTop: 10,
+      },
+      modalButtonText: {
+        fontSize: 18,
+        marginRight: 10,
+        color: Colors.accent,
+      },
 });
