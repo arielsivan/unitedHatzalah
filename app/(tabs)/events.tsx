@@ -1,14 +1,13 @@
-import { View, Text } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import SingleEvent from "@/components/Event/singleEvent";
 import events from "@/mocks/event";
-import { ScrollView } from "react-native-gesture-handler";
 
 export default function EventsScreen() {
   const myEvents = events;
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       {myEvents.map((event) => (
         <SingleEvent
           key={event.id}
@@ -17,8 +16,17 @@ export default function EventsScreen() {
           description={event.description}
           location={event.location}
           emoji={event.emoji}
+          date={event.date}
+          time={event.time}
         />
       ))}
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    padding: 10,
+    paddingTop : 50,
+  },
+});

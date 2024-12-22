@@ -4,13 +4,14 @@ export interface EventProps {
   description: string;
   location: string;
   emoji: string;
+  date: string;
+  time : string;
 }
 export interface Badge{
     id : number;
     title : string;
     icon : string;
 }
-
 export interface UserProf { 
     name : string;
     email : string;

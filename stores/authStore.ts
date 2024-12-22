@@ -24,6 +24,40 @@ interface AuthState {
   fetchUserData: (userId: string) => Promise<void>;
 }
 
+/**
+ * Auth store for managing authentication state.
+ * 
+ * @typedef {Object} AuthState
+ * @property {boolean} isAuthenticated - Indicates if the user is authenticated.
+ * @property {UserProf | null} user - The authenticated user's profile data.
+ * @property {string | null} token - The authentication token.
+ * @property {boolean} loading - Indicates if an authentication-related operation is in progress.
+ * 
+ * @function login
+ * @async
+ * @param {string} email - The user's email address.
+ * @param {string} password - The user's password.
+ * @description Authenticates the user with the provided email and password.
+ * Sets the loading state to true during the process and updates the store with the user's authentication state upon success or failure.
+ * 
+ * @function createUser
+ * @async
+ * @param {string} email - The new user's email address.
+ * @param {string} password - The new user's password.
+ * @param {string} fullName - The new user's full name.
+ * @description Creates a new user with the provided email, password, and full name.
+ * Sets the loading state to true during the process and updates the store with the user's authentication state upon success or failure.
+ * 
+ * @function logout
+ * @description Logs out the current user.
+ * Sets the loading state to true during the process and updates the store to reflect the user's logged-out state.
+ * 
+ * @function fetchUserData
+ * @async
+ * @param {string} userId - The ID of the user whose data is to be fetched.
+ * @description Fetches the profile data of the user with the provided ID.
+ * Sets the loading state to true during the process and updates the store with the user's profile data upon success or failure.
+ */
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   user: null,

@@ -13,6 +13,8 @@ import { Colors } from '@/constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { useAuthStore } from '@/stores/authStore';
+import { CustomButton } from '@/components/CustomButton';
+
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -23,7 +25,6 @@ export default function SignUp() {
   const [fullName, setFullName] = useState('');
 
   const createUser = useAuthStore((state) => state.createUser);
-
 
   useEffect(() => {
     navigation.setOptions({
@@ -42,13 +43,13 @@ export default function SignUp() {
 
     try {
       await createUser(email, password, fullName);
-      router.replace('/(tabs)/learning');
+      router.replace('/(tabs)');
     } catch (error) {
       console.error('Account creation failed:', error);
     }
   };
 
-  return (
+return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => router.back()}
@@ -57,22 +58,21 @@ export default function SignUp() {
         <Ionicons name="arrow-forward" size={24} color="black" />
       </TouchableOpacity>
 
-      <Text style={styles.title}>צור משתמש חדש!</Text>
+      <Text style={styles.title}>צרו משתמש חדש!</Text>
+      <Text style={styles.subtitle}>מחכים לכם</Text>
 
-      {/* User Full Name */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>שם מלא</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setFullName(value)}
-          placeholder="הכניסו שם מלא"
-          textAlign="right"
-        />
-      </View>
+        { /* Full Name*/}
+        <View style={styles.inputContainer}>
+            <TextInput
+                style={styles.input}
+                onChangeText={(value) => setFullName(value)}
+                placeholder="הכניסו שם מלא"
+                textAlign="right"
+            />
+        </View>
 
-      {/* Email */}
+      {/* Email Input */}
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>אימייל</Text>
         <TextInput
           style={styles.input}
           onChangeText={(value) => setEmail(value)}
@@ -81,89 +81,96 @@ export default function SignUp() {
         />
       </View>
 
-      {/* Password */}
+      {/* Password Input */}
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>סיסמה</Text>
         <TextInput
           style={styles.input}
-          secureTextEntry={true}
+          secureTextEntry
           onChangeText={(value) => setPassword(value)}
           placeholder="הכניסו סיסמה"
           textAlign="right"
         />
       </View>
 
-      {/* Create Account Button */}
-      <TouchableOpacity
-        onPress={onCreateAccount}
-        style={styles.createAccountButton}
-      >
-        <Text style={styles.buttonText}>צור חשבון</Text>
-      </TouchableOpacity>
-
       {/* Sign In Button */}
-      <TouchableOpacity
-        onPress={() => router.push('/auth/sign-in')}
-        style={styles.signInButton}
-      >
-        <Text style={styles.buttonText}>התחבר</Text>
-      </TouchableOpacity>
+
+      <CustomButton
+        backgroundColor={Colors.blue}
+        title={'צור חשבון'}
+        handlePress={onCreateAccount}
+      ></CustomButton>
+
+
+      <View style={styles.divider}>
+        <View style={styles.line} />
+        <Text style={styles.dividerSpan}>או</Text>
+        <View style={styles.line} />
+      </View>
+
+      {/* Create Account Button */}
+ 
+
+<CustomButton
+        backgroundColor={Colors.white}
+        title={'התחבר'}
+        handlePress={() => router.push('/auth/sign-in')}
+      ></CustomButton>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 25,
+    padding: 30,
     height: '100%',
     backgroundColor: Colors.accent,
-    display: 'flex',
-    alignItems: 'flex-end',
+    gap: 10,
   },
+
   title: {
-    fontFamily: 'Almoni',
-    fontSize: 30,
-    marginTop: 20,
-    textAlign: 'right',
+    fontSize: 32,
+    marginBottom: 10,
+    color: 'white',
+    textAlign: 'center',
   },
   subtitle: {
-    fontFamily: 'outfit-bold',
-    fontSize: 30,
-    color: Colors.dark.text,
-    textAlign: 'right',
+    fontSize: 24,
+    color: Colors.white,
+    textAlign: 'center',
+    marginBottom: 30,
   },
   inputContainer: {
-    marginTop: 20,
+    marginTop: 10,
     width: '100%',
-  },
-  label: {
-    fontFamily: 'outfit',
-    textAlign: 'right',
   },
   input: {
+    width: '100%',
+    borderRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    fontSize: 16,
     padding: 15,
-    borderColor: Colors.blue,
-    borderRadius: 15,
-    borderWidth: 1,
-    textAlign: 'right',
+    backgroundColor: '#e5e5e5',
+    borderWidth: 2,
+    borderColor: '#a5a5a5',
   },
-  signInButton: {
-    marginTop: 20,
-    padding: 20,
-    backgroundColor: Colors.white,
-    borderRadius: 15,
-    borderWidth: 1,
-    width: '100%',
+  divider: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 16,
   },
-  createAccountButton: {
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: Colors.white,
-    borderRadius: 15,
-    width: '100%',
+
+  line: {
+    borderWidth: 0.5,
+    width: '45%',
+    backgroundColor: 'black',
   },
-  buttonText: {
-    textAlign: 'center',
-    color: Colors.primary,
+
+  dividerSpan: {
+    color: 'black',
+    fontSize: 18,
   },
 });
