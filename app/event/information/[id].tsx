@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
-import { useRouter, useLocalSearchParams, Stack } from "expo-router";
-import events from "@/mocks/event";
+import React from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { useLocalSearchParams, Stack } from 'expo-router';
+import events from '@/mocks/event';
+import BackArrow from '@/components/BackArrow';
 
 const EventInformation: React.FC = () => {
-  const router = useRouter();
   const { id } = useLocalSearchParams();
 
   // Find the event with the matching ID
@@ -22,12 +22,13 @@ const EventInformation: React.FC = () => {
 
   const handleRegister = () => {
     // Handle event registration logic here
-    alert("Registered for the event!");
+    alert('Registered for the event!');
   };
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: name }} />
+      <BackArrow />
       <Text style={styles.header}>{name}</Text>
       <Text style={styles.emoji}>{emoji}</Text>
       <Text style={styles.location}>{location}</Text>
@@ -44,23 +45,23 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 10,
   },
   emoji: {
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 10,
   },
   location: {
     fontSize: 18,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 10,
   },
   description: {
     fontSize: 16,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 20,
   },
 });

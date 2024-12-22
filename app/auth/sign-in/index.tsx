@@ -3,17 +3,15 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableOpacity,
   ToastAndroid,
   I18nManager,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { useAuthStore } from '@/stores/authStore';
 import { CustomButton } from '@/components/CustomButton';
-import { runOnUIImmediately } from 'react-native-reanimated/lib/typescript/threads';
+import BackArrow from '@/components/BackArrow';
 
 export default function SignIn() {
   const navigation = useNavigation();
@@ -55,12 +53,7 @@ export default function SignIn() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => router.back()}
-        style={{ alignSelf: 'flex-end' }}
-      >
-        <Ionicons name="arrow-forward" size={24} color="black" />
-      </TouchableOpacity>
+      <BackArrow />
 
       <Text style={styles.title}>בואו נתחבר</Text>
       <Text style={styles.subtitle}>ברוכים הבאים</Text>
@@ -114,7 +107,7 @@ const styles = StyleSheet.create({
     padding: 30,
     height: '100%',
     backgroundColor: Colors.accent,
-    gap : 10
+    gap: 10,
   },
 
   title: {
@@ -144,7 +137,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#e5e5e5',
     borderWidth: 2,
     borderColor: '#a5a5a5',
-
   },
   divider: {
     display: 'flex',
@@ -155,7 +147,7 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    borderWidth : 0.5,
+    borderWidth: 0.5,
     width: '45%',
     backgroundColor: 'black',
   },
@@ -163,6 +155,5 @@ const styles = StyleSheet.create({
   dividerSpan: {
     color: 'black',
     fontSize: 18,
-  }
+  },
 });
-

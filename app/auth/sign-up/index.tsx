@@ -14,7 +14,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { useAuthStore } from '@/stores/authStore';
 import { CustomButton } from '@/components/CustomButton';
-
+import BackArrow from '@/components/BackArrow';
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -49,27 +49,22 @@ export default function SignUp() {
     }
   };
 
-return (
+  return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => router.back()}
-        style={{ alignSelf: 'flex-end' }}
-      >
-        <Ionicons name="arrow-forward" size={24} color="black" />
-      </TouchableOpacity>
+      <BackArrow />
 
       <Text style={styles.title}>צרו משתמש חדש!</Text>
       <Text style={styles.subtitle}>מחכים לכם</Text>
 
-        { /* Full Name*/}
-        <View style={styles.inputContainer}>
-            <TextInput
-                style={styles.input}
-                onChangeText={(value) => setFullName(value)}
-                placeholder="הכניסו שם מלא"
-                textAlign="right"
-            />
-        </View>
+      {/* Full Name*/}
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setFullName(value)}
+          placeholder="הכניסו שם מלא"
+          textAlign="right"
+        />
+      </View>
 
       {/* Email Input */}
       <View style={styles.inputContainer}>
@@ -100,7 +95,6 @@ return (
         handlePress={onCreateAccount}
       ></CustomButton>
 
-
       <View style={styles.divider}>
         <View style={styles.line} />
         <Text style={styles.dividerSpan}>או</Text>
@@ -108,9 +102,8 @@ return (
       </View>
 
       {/* Create Account Button */}
- 
 
-<CustomButton
+      <CustomButton
         backgroundColor={Colors.white}
         title={'התחבר'}
         handlePress={() => router.push('/auth/sign-in')}
