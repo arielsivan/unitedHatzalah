@@ -63,6 +63,11 @@ export default function ProfileScreen() {
     }
   };
 
+  const handleResetProfileImage = () => {
+    setProfileImage(null);
+    setModalVisible(false);
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Avatar Section */}
@@ -122,15 +127,25 @@ export default function ProfileScreen() {
               onPress={handleTakePhoto}
             >
               <Ionicons name="camera-outline" size={24} color={Colors.accent} />
-              <Text style={styles.modalButtonText}>Take Photo</Text>
+              <Text style={styles.modalButtonText}>תמונה</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.modalButton}
               onPress={handleChoosePhoto}
             >
               <Ionicons name="image-outline" size={24} color={Colors.accent} />
-              <Text style={styles.modalButtonText}>Choose from Gallery</Text>
+              <Text style={styles.modalButtonText}>בחירה מגלריה</Text>
             </TouchableOpacity>
+            {/* Reset to Default Button */}
+            {profileImage && (
+              <TouchableOpacity
+                style={[styles.modalButton, styles.resetButton]}
+                onPress={handleResetProfileImage}
+              >
+                <Ionicons name="refresh-outline" size={24} color={Colors.accent} />
+                <Text style={styles.modalButtonText}>ברירת מחדל</Text>
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               style={[styles.modalButton, styles.cancelButton]}
               onPress={() => setModalVisible(false)}
@@ -140,7 +155,7 @@ export default function ProfileScreen() {
                 size={24}
                 color={Colors.secondary}
               />
-              <Text style={styles.modalButtonText}>Cancel</Text>
+              <Text style={styles.modalButtonText}>ביטול</Text>
             </TouchableOpacity>
           </View>
         </Pressable>
@@ -277,6 +292,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'center',
     paddingVertical: 15,
+  },
+  resetButton: {
+    borderTopWidth: 1,
+    borderColor: Colors.secondary,
+    marginTop: 10,
   },
   cancelButton: {
     marginTop: 10,
