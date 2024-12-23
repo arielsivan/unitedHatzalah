@@ -1,39 +1,11 @@
-import { View, Text, ScrollView } from 'react-native';
+// import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
-import DuoRoundButton from '@/components/DuoRoundButton';
-import mockItems from '@/mocks/items';
+// import mockItems from '@/mocks/items';
+// import { CustomButton } from '@/components/CustomButton';
+import LessonTree from '@/components/Course/LessonTree';
 
 export default function Learning() {
-  const items = mockItems;
-
   return (
-    <ScrollView
-      contentContainerStyle={{
-        margin: 10,
-        marginTop: 20,
-        paddingBottom: 50,
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      {items.map((item, key) => {
-        const step = 70;
-        const snakeMargin = step * Math.abs((key % 4) - 2) - step;
-
-        return (
-          <View
-            key={key}
-            style={{
-              marginLeft: snakeMargin,
-            }}
-          >
-            <DuoRoundButton
-              text={item.emoji}
-              backgroundColor={item.background}
-            />
-          </View>
-        );
-      })}
-    </ScrollView>
+    <LessonTree />
   );
 }

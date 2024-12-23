@@ -6,35 +6,38 @@ interface Props {
   color?: string;
   backgroundColor?: string;
   title?: string;
+  rounded?: boolean;
   handlePress?: () => void;
 }
 
 export function CustomButton({
-    color = '#FFFFFF',
-    backgroundColor = '#007BFF',
-    title = 'Button',
-    handlePress = () => {},
+  color = '#FFFFFF',
+  backgroundColor = '#007BFF',
+  title = 'Button',
+  rounded = false,
+  handlePress = () => {},
 }: Props) {
-
-    const { lighten, darken } = useColorAdjust();
-    const adjustedBackgroundColor = darken(backgroundColor, -20);
-    const adjustColor = (color == backgroundColor) ?  darken(backgroundColor, 100) : color;
-    return (
-        <View>
-            <Pressable
-                style={({ pressed }) => [
-                    styles.button,
-                    pressed
-                        ? styles.buttonPressed
-                        : { boxShadow: '0 5px 0 ' + adjustedBackgroundColor },
-                    { backgroundColor },
-                ]}
-                onPress={handlePress}
-            >
-                <Text style={[styles.text, { color : adjustColor }]}>{title}</Text>
-            </Pressable>
-        </View>
-    );
+  const { lighten, darken } = useColorAdjust();
+  const adjustedBackgroundColor = darken(backgroundColor, 20);
+  const adjustColor =
+    color == backgroundColor ? darken(backgroundColor, 100) : color;
+  return (
+    <View>
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          pressed
+            ? styles.buttonPressed
+            : { boxShadow: '0 5px 0 ' + adjustedBackgroundColor },
+          { backgroundColor },
+          rounded && styles.rounded,
+        ]}
+        onPress={handlePress}
+      >
+        <Text style={[styles.text, { color: adjustColor }]}>{title}</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -56,5 +59,15 @@ const styles = StyleSheet.create({
   buttonPressed: {
     boxShadow: 'none',
     transform: 'translateY(5px)',
+  },
+  rounded: {
+    borderRadius: 100,
+    height: 60,
+    width: 65,
+      fontSize: 28,
+    lineHeight: 32,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
