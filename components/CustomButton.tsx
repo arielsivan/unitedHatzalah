@@ -7,6 +7,7 @@ interface Props {
   backgroundColor?: string;
   title?: string;
   rounded?: boolean;
+  fontSize?: number;
   handlePress?: () => void;
 }
 
@@ -15,6 +16,7 @@ export function CustomButton({
   backgroundColor = '#007BFF',
   title = 'Button',
   rounded = false,
+  fontSize = 18,
   handlePress = () => {},
 }: Props) {
   const { lighten, darken } = useColorAdjust();
@@ -34,7 +36,9 @@ export function CustomButton({
         ]}
         onPress={handlePress}
       >
-        <Text style={[styles.text, { color: adjustColor }]}>{title}</Text>
+        <Text style={[styles.text, { color: adjustColor, fontSize: fontSize }]}>
+          {title}
+        </Text>
       </Pressable>
     </View>
   );
@@ -42,7 +46,6 @@ export function CustomButton({
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 18,
     lineHeight: 32,
     margin: 10,
     fontWeight: 'bold',
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     height: 60,
     width: 65,
-      fontSize: 28,
+    fontSize: 28,
     lineHeight: 32,
     margin: 10,
     alignItems: 'center',
