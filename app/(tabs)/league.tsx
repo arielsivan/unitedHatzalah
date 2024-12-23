@@ -22,7 +22,7 @@ export default function Leaderboard() {
         <Text style={styles.rank}>{index + 1}</Text>
       )}
       <Image
-        source={{ uri: 'https://robohash.org/' + index }}
+        source={{ uri: 'https://robohash.org/a' + index }}
         style={styles.avatar}
       />
       <View style={styles.userInfo}>
