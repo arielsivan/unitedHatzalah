@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   itemContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     padding: 15,
     marginVertical: 8,

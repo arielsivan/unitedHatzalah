@@ -1,57 +1,72 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { I18nManager, StyleSheet } from 'react-native';
 
 import { Colors } from '@/constants/Colors';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
+// Ensure the layout is RTL
+I18nManager.forceRTL(true);
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarActiveTintColor: Colors.accent,
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: { backgroundColor: Colors.white },
+
+        // Align items to have label before icon
+        tabBarItemStyle: {
+          flexDirection: 'row', // Set to 'row' to have label first in RTL
+          alignItems: 'center',
+        },
+        tabBarLabelStyle: {
+          marginRight: 6, // Space between label and icon
+          fontSize: 12,
+        },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'ראשי',
-          tabBarIcon: () => (
-            <Ionicons name="home" size={24} color={Colors.accent} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="league"
-        options={{
-          title: 'ליגה',
-          tabBarIcon: () => (
-            <MaterialCommunityIcons
-              name="trophy"
-              size={24}
-              color={Colors.accent}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'פרופיל',
-          tabBarIcon: () => (
-            <Ionicons name="person" size={24} color={Colors.accent} />
-          ),
-        }}
-      />
+      {/* אירועים (Events) Tab */}
       <Tabs.Screen
         name="events"
         options={{
           title: 'אירועים',
-          tabBarIcon: () => (
-            <MaterialCommunityIcons
-              name="car"
-              size={24}
-              color={Colors.accent}
-            />
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="calendar" size={24} color={color} />
+          ),
+        }}
+      />
+      {/* פרופיל (Profile) Tab */}
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'פרופיל',
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person" size={24} color={color} />
+          ),
+        }}
+      />
+
+      {/* ליגה (League) Tab */}
+      <Tabs.Screen
+        name="league"
+        options={{
+          title: 'ליגה',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="trophy" size={24} color={color} />
+          ),
+        }}
+      />
+
+      {/* ראשי (Home) Tab */}
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'ראשי',
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="home" size={24} color={color} />
           ),
         }}
       />
