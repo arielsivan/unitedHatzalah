@@ -5,10 +5,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import { Badge } from '@/types/data';
 import { useAuthStore } from '@/stores/authStore';
+import { CustomButton } from '@/components/CustomButton';
+import { useRouter } from 'expo-router';
 
 export default function ProfileScreen() {
     const user = useAuthStore((state) => state.user);
+    const logout = useAuthStore((state) => state.logout);
 
+    const router = useRouter();
+
+    const onLogout = () => {
+        // Add: are you sure you want to logout?
+        logout();
+        router.replace('/auth/sign-in');
+    };
     const badges: Badge[] = [
         { id: 1, title: 'שיעור ראשון', icon: 'star-outline' },
         { id: 2, title: 'רצף של 5 ימים', icon: 'flame-outline' },
@@ -62,6 +72,13 @@ export default function ProfileScreen() {
                     ))}
                 </View>
             </View>
+
+            {/* Logout Button */}
+             <CustomButton
+                backgroundColor={Colors.orange}
+                title={'התנתק'}
+                handlePress={onLogout}
+            ></CustomButton>
         </ScrollView>
     );
 }
