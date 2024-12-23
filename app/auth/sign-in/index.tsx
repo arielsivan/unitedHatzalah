@@ -12,6 +12,7 @@ import { Colors } from '@/constants/Colors';
 import { useAuthStore } from '@/stores/authStore';
 import { CustomButton } from '@/components/CustomButton';
 import BackArrow from '@/components/BackArrow';
+import CustomInput from '@/components/CustomInput';
 
 export default function SignIn() {
   const navigation = useNavigation();
@@ -59,25 +60,10 @@ export default function SignIn() {
       <Text style={styles.subtitle}>ברוכים הבאים</Text>
 
       {/* Email Input */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setEmail(value)}
-          placeholder="הכניסו אימייל"
-          textAlign="right"
-        />
-      </View>
-
+      <CustomInput placeholder="הכניסו אימייל" handleTextChange={setEmail} />
+      
       {/* Password Input */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          secureTextEntry
-          onChangeText={(value) => setPassword(value)}
-          placeholder="הכניסו סיסמה"
-          textAlign="right"
-        />
-      </View>
+      <CustomInput placeholder="הכניסו סיסמה" handleTextChange={setPassword} secureTextEntry={true} />
 
       {/* Sign In Button */}
       <CustomButton

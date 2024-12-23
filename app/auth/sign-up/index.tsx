@@ -15,6 +15,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useAuthStore } from '@/stores/authStore';
 import { CustomButton } from '@/components/CustomButton';
 import BackArrow from '@/components/BackArrow';
+import CustomInput from '@/components/CustomInput';
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -57,35 +58,16 @@ export default function SignUp() {
       <Text style={styles.subtitle}>מחכים לכם</Text>
 
       {/* Full Name*/}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setFullName(value)}
-          placeholder="הכניסו שם מלא"
-          textAlign="right"
-        />
-      </View>
+
+      <CustomInput placeholder="הכניסו שם מלא" handleTextChange={setFullName} />
 
       {/* Email Input */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setEmail(value)}
-          placeholder="הכניסו אימייל"
-          textAlign="right"
-        />
-      </View>
+
+      <CustomInput placeholder="הכניסו אימייל" handleTextChange={setEmail} />
 
       {/* Password Input */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          secureTextEntry
-          onChangeText={(value) => setPassword(value)}
-          placeholder="הכניסו סיסמה"
-          textAlign="right"
-        />
-      </View>
+
+      <CustomInput placeholder="הכניסו סיסמה" handleTextChange={setPassword} secureTextEntry={true} />
 
       {/* Sign In Button */}
 
