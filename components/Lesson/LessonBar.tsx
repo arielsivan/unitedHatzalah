@@ -8,14 +8,14 @@ import { useRouter } from 'expo-router';
 
 interface LessonBarProps {
   heartCount?: number;
-  progressPercent?: number;
+  progress?: number;
 }
 
 export default function LessonBar({
-  heartCount = 5,
-  progressPercent = 0.5,
+  heartCount = 2,
+  progress = 0.5,
 }: LessonBarProps) {
-    const router = useRouter();
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
@@ -28,7 +28,7 @@ export default function LessonBar({
 
       {/* Diamond */}
       <View style={styles.statItem}>
-        <ProgressBar />
+        <ProgressBar progress={progress} />
       </View>
 
       {/* Heart */}
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
   statItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap : 4,
+    gap: 4,
   },
   statText: {
     marginLeft: 5,
     fontSize: 18,
-    fontWeight : 'bold',
+    fontWeight: 'bold',
     color: Colors.orange,
   },
 });
