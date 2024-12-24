@@ -11,15 +11,48 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { getAuth, deleteUser } from 'firebase/auth';
 
 import { Colors } from '../../constants/Colors';
 import { Badge } from '@/types/data';
 import { useAuthStore } from '@/stores/authStore';
+import { CustomButton } from '@/components/CustomButton';
+import { Redirect, router } from 'expo-router';
 
 export default function ProfileScreen() {
+  const HandleDeleteAccount = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        await deleteUser(user);
+        alert('Your account has been deleted successfully.');
+        // Optionally, navigate the user to a different screen
+      } else {
+        alert('No user is signed in.');
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Error deleting user account:', error.message);
+
+        if ((error as any).code === 'auth/requires-recent-login') {
+          alert('Please log in again to delete your account.');
+        }
+      } else {
+        console.error('An unknown error occurred:', error);
+      }
+    }
+  };
+
   const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const HandleLogout = () => {
+    logout();
+    router.replace('/auth/sign-in');
+  };
 
   const badges: Badge[] = [
     { id: 1, title: 'שיעור ראשון', icon: 'star-outline' },
@@ -182,6 +215,18 @@ export default function ProfileScreen() {
           ))}
         </View>
       </View>
+
+      {/* logout */}
+      <CustomButton title="התנתק" handlePress={HandleLogout} />
+
+      {/* delete account */}
+      <View style={styles.logoutButton}>
+        <CustomButton
+          title="מחק חשבון"
+          backgroundColor={'red'}
+          handlePress={HandleDeleteAccount}
+        />
+      </View>
     </ScrollView>
   );
 }
@@ -309,5 +354,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginRight: 10,
     color: Colors.accent,
+  },
+  logoutButton: {
+    alignItems: 'center',
+    marginBottom: 20,
+    justifyContent: 'flex-end',
   },
 });

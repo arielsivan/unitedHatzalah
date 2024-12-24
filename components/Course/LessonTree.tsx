@@ -1,15 +1,17 @@
 import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
-import mockItems from '@/mocks/items'; // Ensure this path is correct
 import { CustomButton } from '@/components/CustomButton'; // Ensure this path is correct
+import { Lesson } from '@/types/data';
+import { useRouter } from 'expo-router';
 
 interface Props{
-    //add props here
+    lessons?: Lesson[];
 }
 
-export default function LessonTree({}: Props) {
-  const items = mockItems;
-  
+export default function LessonTree({
+    lessons = [],
+}: Props) {
+    const router = useRouter();
     return (
       <ScrollView
         contentContainerStyle={{
@@ -20,21 +22,22 @@ export default function LessonTree({}: Props) {
           alignItems: 'center',
         }}
       >
-        {items.map((item, key) => {
+        {lessons.map((item, key) => {
           const step = 70;
           const snakeMargin = step * Math.abs((key % 4) - 2) - step;
   
           return (
             <View
-              key={key}
+              key={item.id}
               style={{
                 marginLeft: snakeMargin,
               }}
             >
               <CustomButton
-                title={item.emoji}
-                backgroundColor={item.background}
+                title={item.icon}
+                backgroundColor={item.color}
                 rounded={true}
+                handlePress={() => router.push(`/course/lesson/${item.id}`)}
               />
             </View>
           );
