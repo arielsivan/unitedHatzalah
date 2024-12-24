@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   ToastAndroid,
   I18nManager,
@@ -47,6 +46,7 @@ export default function SignIn() {
 
     try {
       await login(email, password);
+      router.replace('/(tabs)');
     } catch (error) {
       console.error('Login failed:', error);
     }

@@ -1,17 +1,18 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CustomButton } from './CustomButton'; // Adjust the path if necessary
+import { Colors } from '@/constants/Colors';
 
 interface UpArrowProps {
   onPress: () => void;
 }
 
-const UpArrow: React.FC<UpArrowProps> = ({ onPress }) => {
+export default function UpArrow({ onPress } : UpArrowProps) {
   return (
     <View style={styles.container}>
       <CustomButton
         title="↑" // Using an upward arrow symbol as the button title
-        backgroundColor="#3498db" // Customize the background color as needed
+        backgroundColor={Colors.blue} // Customize the background color as needed
         color="#fff" // Text (arrow) color
         handlePress={onPress} // Function to handle the press event
         rounded={true} // Makes the button circular
@@ -29,5 +30,3 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
 });
-
-export default UpArrow;
