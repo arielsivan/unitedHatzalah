@@ -38,6 +38,18 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      {/* קהילה (Community) Tab */}
+      <Tabs.Screen
+        name="community"
+        options={{
+          title: 'קהילה',
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="people" size={24} color={color} />
+          ),
+        }}
+      />
+
       {/* פרופיל (Profile) Tab */}
       <Tabs.Screen
         name="profile"
