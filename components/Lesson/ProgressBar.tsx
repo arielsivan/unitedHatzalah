@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react';
-import { View, Animated, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Animated, StyleSheet } from 'react-native';
 
-export default function ProgressBar ({ 
+export default function ProgressBar({
   progress = 0.3, // Value between 0 and 1
   width = 300,
   height = 20,
-  color = '#58CC02', // Duolingo green
+  color = '#58CC02',
   backgroundColor = '#E5E5E5',
   animated = true,
-  showPercentage = true
-}){
-  const animatedWidth = new Animated.Value(0);
+}) {
+  const animatedWidth = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (animated) {
@@ -26,12 +25,12 @@ export default function ProgressBar ({
 
   const progressWidth = animatedWidth.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
+    outputRange: [0, width], // Use numeric values here for proper width calculation
   });
 
   return (
     <View style={[styles.container, { width, height }]}>
-      <View style={[styles.backgroundBar, { backgroundColor }]}>
+      <View style={[styles.backgroundBar, { width, height, backgroundColor }]}>
         <Animated.View
           style={[
             styles.progressBar,
@@ -42,14 +41,9 @@ export default function ProgressBar ({
           ]}
         />
       </View>
-      {showPercentage && (
-        <Text style={styles.percentageText}>
-          {Math.round(progress * 100)}%
-        </Text>
-      )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -57,18 +51,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backgroundBar: {
-    flex: 1,
     borderRadius: 10,
     overflow: 'hidden',
   },
   progressBar: {
     height: '100%',
     borderRadius: 10,
-  },
-  percentageText: {
-    marginLeft: 10,
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#4B4B4B',
   },
 });
