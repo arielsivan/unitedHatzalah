@@ -2,12 +2,23 @@ import { Pressable, StyleSheet, View, Text } from 'react-native';
 import React from 'react';
 import { Exercise } from '@/types/data';
 
+interface ChoiceExerciseProps {
+  exercise: Exercise;
+  onAnswerSelected: (isCorrect: boolean) => void;
+}
+
 export default function ChoiceExercise({
-  id,
-  answers,
-  correct,
-  question,
-}: Exercise) {
+  exercise,
+  onAnswerSelected,
+}: ChoiceExerciseProps) {
+  const { question, answers, correct } = exercise;
+
+  const handleAnswerPress = (index: number) => {
+    const isCorrect = index === correct;
+    console.log(`Option ${index + 1} pressed! Correct: ${isCorrect}`);
+    onAnswerSelected(isCorrect);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.questionText}>{question}</Text>
@@ -23,7 +34,7 @@ export default function ChoiceExercise({
                 correct === index ? styles.correct : styles.incorrect,
               ],
             ]}
-            onPress={() => console.log(`Option ${index + 1} pressed!`)}
+            onPress={() => handleAnswerPress(index)}
           >
             <View style={styles.answerContent}>
               <Text style={[styles.answerIndex]}>{index + 1}</Text>

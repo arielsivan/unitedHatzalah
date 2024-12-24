@@ -24,7 +24,7 @@ export function CustomButton({
   const adjustColor =
     color == backgroundColor ? darken(backgroundColor, 100) : color;
   return (
-    <View>
+    <View style={{ width: '100%' }}>
       <Pressable
         style={({ pressed }) => [
           styles.button,
