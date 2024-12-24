@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import events from '@/mocks/event';
 import BackArrow from '@/components/BackArrow';
+import MapsAPI from '@/components/MapsAPI'; // Assuming MapsAPI is located here
 
 const EventInformation: React.FC = () => {
   const { id } = useLocalSearchParams();
@@ -33,6 +34,7 @@ const EventInformation: React.FC = () => {
       <Text style={styles.emoji}>{emoji}</Text>
       <Text style={styles.location}>{location}</Text>
       <Text style={styles.description}>{description}</Text>
+      <MapsAPI address={location} />
       <Button title="Register" onPress={handleRegister} />
     </View>
   );
