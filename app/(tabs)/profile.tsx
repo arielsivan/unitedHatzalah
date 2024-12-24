@@ -16,7 +16,7 @@ import { getAuth, deleteUser } from 'firebase/auth';
 import { Colors } from '../../constants/Colors';
 import { Badge } from '@/types/data';
 import { useAuthStore } from '@/stores/authStore';
-import { CustomButton } from '@/components/CustomButton';
+import { CustomButton } from '@/components/ui/CustomButton';
 import { Redirect, router } from 'expo-router';
 
 export default function ProfileScreen() {
@@ -51,7 +51,7 @@ export default function ProfileScreen() {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const HandleLogout = () => {
     logout();
-    router.replace('/auth/sign-in');
+    router.replace('/auth/login');
   };
 
   const badges: Badge[] = [

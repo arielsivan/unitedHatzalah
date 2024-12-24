@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
-import { CustomButton } from '@/components/CustomButton'; // Ensure this path is correct
+import { CustomButton } from '@/components/ui/CustomButton'; // Ensure this path is correct
 import { Lesson } from '@/types/data';
 import { useRouter } from 'expo-router';
 

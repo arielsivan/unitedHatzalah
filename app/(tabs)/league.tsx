@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
 import { mockLeaderboardData } from '@/mocks/league';
-import UpArrow from '@/components/UpArrow'; // Import UpArrow component
+import UpArrow from '@/components/ui/UpArrow'; // Import UpArrow component
 import ScrollToTopContainer from '@/components/ui/ScrollToTopContainer';
 
 type Item = {

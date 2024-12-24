@@ -1,6 +1,6 @@
 // import { View, Text } from 'react-native';
 import React from 'react';
-import { CustomButton } from '../CustomButton';
+import { CustomButton } from '../ui/CustomButton';
 
 interface Props {
   NodeText: string;

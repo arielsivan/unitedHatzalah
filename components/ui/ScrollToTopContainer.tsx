@@ -5,7 +5,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import UpArrow from '@/components/UpArrow';
+import UpArrow from '@/components/ui/UpArrow';
 
 interface ScrollToTopContainerProps {
   children: ReactNode;

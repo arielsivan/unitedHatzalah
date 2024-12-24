@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Colors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
-import { CustomButton } from './CustomButton';
+import { CustomButton } from './ui/CustomButton';
 
 export default function Login() {
   const router = useRouter();
@@ -42,7 +42,7 @@ export default function Login() {
           color={Colors.white}
           backgroundColor={Colors.blue}
           title={'התחבר לישומון'}
-          handlePress={() => router.push('/auth/sign-in')}
+          handlePress={() => router.push('/auth/login')}
         ></CustomButton>
 
         {/* Only in Dev */}

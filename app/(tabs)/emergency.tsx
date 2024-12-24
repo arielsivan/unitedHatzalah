@@ -6,10 +6,10 @@ export default function emergency() {
   const router = useRouter();
 
   let button = [
-    { title: 'CPR', image: require('../assets/cpr.png') },
-    { title: 'Choking', image: require('../assets/choking.png') },
-    { title: 'Burns', image: require('../assets/burns.png') },
-    { title: 'Bleeding', image: require('../assets/bleeding.png') },
+    { title: 'CPR' },
+    { title: 'Choking' },
+    { title: 'Burns' },
+    { title: 'Bleeding' },
   ];
 
   return (
