@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { Colors } from '@/constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Colors }  from '@/constants/Colors';
 
 interface Props {
   title: string;
@@ -9,45 +9,40 @@ interface Props {
 
 export default function Qcard({ title }: Props) {
   return (
-    <View style={styles.rounded}>
+    <View style={styles.card}>
       <Text style={styles.text}>{title}</Text>
-      <TouchableOpacity 
-      style={styles.iconContainer}
-      onPress={() => console.log('Pressed')}>
-        <Ionicons
-            name={'arrow-back'}
-            size={24}
-            color="#a5a5a5"
-          />
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={() => console.log('Pressed')}>
+        <Ionicons name="arrow-back" size={24} color="#FFF" />
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  card: {
+    backgroundColor: Colors.accent, // צבע כתום
+    borderRadius: 25,
+    padding: 20,
+    marginVertical: 25,
+    marginHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, // צל לאנדרואיד
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#FFF',
+    marginBottom: 20, 
+  },
   iconContainer: {
     position: 'absolute',
-    left: 30,
-    bottom: 10,
-  },
-  text:{
-    lineHeight: 32,
-    textAlign: 'center',
-    fontSize: 18,
-    margin: 10,
-    fontWeight: 'bold',
-  },
-  rounded: {
-    backgroundColor: Colors.accent,
-    borderRadius: 100,
-    height: 150,
-    width: '100%',
-    alignContent: 'center',
-    padding: 30,
-    fontSize: 28,
-    lineHeight: 32,
-    margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    left: 20,
+    bottom: 10, 
   },
 });

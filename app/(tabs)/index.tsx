@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import LessonTree from '@/components/Course/LessonTree';
 import UpArrow from '@/components/UpArrow'; // Import UpArrow component
+import { mockCourses } from '@/mocks/courses';
 
 export default function Learning() {
   const scrollViewRef = useRef<ScrollView>(null); // Create a reference to the ScrollView
@@ -35,7 +36,7 @@ export default function Learning() {
         onScroll={handleScroll}
         scrollEventThrottle={16} // Adjust the frequency of scroll events
       >
-        <LessonTree />
+        <LessonTree lessons={mockCourses[0].lessons}/>
       </ScrollView>
       {isVisible && <UpArrow onPress={scrollToTop} />}{' '}
       {/* Conditionally render UpArrow */}
