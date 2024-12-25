@@ -5,11 +5,13 @@ import { Exercise } from '@/types/data';
 interface ChoiceExerciseProps {
   exercise: Exercise;
   onAnswerSelected: (isCorrect: boolean) => void;
+  type : 'text-to-text' | 'text-to-image' | 'image-to-text' | 'image-to-image';
 }
 
 export default function ChoiceExercise({
   exercise,
   onAnswerSelected,
+  type = 'text-to-text',
 }: ChoiceExerciseProps) {
   const { question, answers, correct } = exercise;
 
