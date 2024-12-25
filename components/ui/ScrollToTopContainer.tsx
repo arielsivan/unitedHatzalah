@@ -45,8 +45,8 @@ export default function ScrollToTopContainer({ children
         scrollEventThrottle={16}
       >
         {children}
-      </ScrollView>
       {isVisible && <UpArrow onPress={scrollToTop} />}
+      </ScrollView>
     </>
   );
 }
