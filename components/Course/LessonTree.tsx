@@ -24,7 +24,7 @@ export default function LessonTree({
 
         return (
           <View
-            key={item.id}
+            key={key}
             style={{
               marginLeft: snakeMargin,
             }}

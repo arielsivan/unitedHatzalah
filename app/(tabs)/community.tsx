@@ -13,8 +13,8 @@ export default function Community() {
     >
       <View style={styles.overlay} />
       <ScrollToTopContainer contentContainerStyle={styles.container}>
-        {MockCards.map((card) => (
-          <Qcard key={card.id} title={card.title} id={card.id} />
+        {MockCards.map((card,key) => (
+          <Qcard key={key} title={card.title} id={card.id} />
         ))}
       </ScrollToTopContainer>
     </ImageBackground>

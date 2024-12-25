@@ -5,7 +5,7 @@ import ScrollToTopContainer from '@/components/ui/ScrollToTopContainer';
 import { UserProf } from '@/types/data';
 
 export default function Leaderboard() {
-    let users = mockUsers as UserProf[];
+    let users = mockUsers as unknown as UserProf[];
 
 
   const UserLeague = ({ item, index }: { item: UserProf; index: number }) => (

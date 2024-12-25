@@ -1,11 +1,8 @@
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
-  ScrollView,
   ImageBackground,
-  TouchableOpacity,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
@@ -13,7 +10,6 @@ import BackArrow from '@/components/ui/BackArrow'; // Replace with your actual c
 import CustomInput from '@/components/ui/CustomInput'; // Replace with your actual component
 import community from '@/mocks/community';
 import ScrollToTopContainer from '@/components/ui/ScrollToTopContainer';
-import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function Community() {
   const { id } = useLocalSearchParams();
