@@ -3,7 +3,11 @@ import React from 'react';
 import { I18nManager } from 'react-native';
 
 import { Colors } from '@/constants/Colors';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 import { useAuthStore } from '@/stores/authStore';
 import UserStats from '@/components/Header/UserStatsBar';
 
@@ -73,6 +77,16 @@ export default function TabLayout() {
             title: 'ראשי',
             tabBarIcon: ({ color }) => (
               <Ionicons name="home" size={24} color={color} />
+            ),
+          }}
+        />
+        {/* SOS (emergency) Tab */}
+        <Tabs.Screen
+          name="emergency"
+          options={{
+            title: 'ראשי',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="sos" size={24} color={color} />
             ),
           }}
         />
