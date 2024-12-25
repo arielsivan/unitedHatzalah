@@ -1,4 +1,5 @@
 
+
 export interface EventProps {
   id: string;
   name: string;
@@ -18,7 +19,7 @@ export interface UserProf {
     email : string;
     gems : number;
     hearts : number;
-    streak : Date;
+    streak : number; // Date.now
     avatar : string;
     progress : any;
     xp : number;
@@ -34,10 +35,7 @@ export interface Course {
 }
 
 export interface Lesson {
-    id : string;
-    title : string;
-    description : string;
-    disabled : boolean;
+    id  : string;
     icon : string;
     color : string;
     exercises : Exercise[];
