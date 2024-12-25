@@ -9,6 +9,7 @@ import UpArrow from '@/components/ui/UpArrow';
 
 interface ScrollToTopContainerProps {
   children: ReactNode;
+  contentContainerStyle?: any;
 }
 
 /**
@@ -20,7 +21,9 @@ interface ScrollToTopContainerProps {
  *
  * @returns {JSX.Element} The rendered ScrollToTopContainer component.
  */
-export default function ScrollToTopContainer({ children }: ScrollToTopContainerProps) {
+export default function ScrollToTopContainer({ children
+  , contentContainerStyle = {}
+ }: ScrollToTopContainerProps) {
   const scrollViewRef = useRef<ScrollView>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -37,7 +40,7 @@ export default function ScrollToTopContainer({ children }: ScrollToTopContainerP
     <>
       <ScrollView
         ref={scrollViewRef}
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContainer && contentContainerStyle}
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
