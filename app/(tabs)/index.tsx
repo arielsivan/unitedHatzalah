@@ -7,7 +7,7 @@ import { mockCourses } from '@/mocks/courses';
 export default function Learning() {
   return (
     <ScrollToTopContainer>
-      <LessonTree lessons={mockCourses[0].lessons} />
+      <LessonTree {...mockCourses[0]} />
     </ScrollToTopContainer>
   );
 }

@@ -1,16 +1,14 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
-import { mockLeaderboardData } from '@/mocks/league';
-import UpArrow from '@/components/ui/UpArrow'; // Import UpArrow component
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import mockUsers from '@/mocks/users.json';
 import ScrollToTopContainer from '@/components/ui/ScrollToTopContainer';
-
-type Item = {
-  name: string;
-  points: number;
-};
+import { UserProf } from '@/types/data';
 
 export default function Leaderboard() {
-  const renderItem = ({ item, index }: { item: Item; index: number }) => (
+    let users = mockUsers as UserProf[];
+
+
+  const UserLeague = ({ item, index }: { item: UserProf; index: number }) => (
     <View style={styles.itemContainer}>
       {index === 0 ? (
         <Text style={styles.rank}>🥇</Text>
@@ -22,12 +20,12 @@ export default function Leaderboard() {
         <Text style={styles.rank}>{index + 1}</Text>
       )}
       <Image
-        source={{ uri: 'https://robohash.org/a' + index }}
+        source={{ uri: 'https://robohash.org/' + index }}
         style={styles.avatar}
       />
       <View style={styles.userInfo}>
         <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.points}>{item.points} XP</Text>
+        <Text style={styles.points}>{item.xp} XP</Text>
       </View>
     </View>
   );
@@ -35,12 +33,11 @@ export default function Leaderboard() {
   return (
     <ScrollToTopContainer>
       <Text style={styles.header}> לוח תוצאות שבועי 🏆</Text>
-      <FlatList
-        data={mockLeaderboardData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.name}
-      />
-      <UpArrow onPress={() => console.log('Scroll to top')} />
+      {users
+        .sort((a, b) => b.xp - a.xp)
+        .map((user, index) => (
+          <UserLeague item={user} index={index} key={index} />
+        ))}
     </ScrollToTopContainer>
   );
 }

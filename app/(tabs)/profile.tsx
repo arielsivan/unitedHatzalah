@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,8 @@ import { Badge } from '@/types/data';
 import { useAuthStore } from '@/stores/authStore';
 import { CustomButton } from '@/components/ui/CustomButton';
 import { Redirect, router } from 'expo-router';
+import Avatar from '@/components/Profile/Avatar';
+import ModalImageOptions from '@/components/Profile/ModalImageOptions';
 
 export default function ProfileScreen() {
   const HandleDeleteAccount = async () => {
@@ -47,79 +49,39 @@ export default function ProfileScreen() {
 
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  const [avatar, setAvatar] = useState(user?.avatar || '');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [streak, setStreak] = useState(0);
   const HandleLogout = () => {
     logout();
     router.replace('/auth/login');
   };
+
+  useEffect(() => {
+    if (user) {
+      const now = new Date(); // Current date and time
+
+      // Calculate the difference in milliseconds
+      const diffInMs = now.getTime() - new Date(user.streak).getTime();
+
+      // Convert milliseconds to days, hours, minutes, etc.
+      const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+      setStreak(diffInDays);
+    }
+  }, [user]);
 
   const badges: Badge[] = [
     { id: 1, title: 'שיעור ראשון', icon: 'star-outline' },
     { id: 2, title: 'רצף של 5 ימים', icon: 'flame-outline' },
     { id: 3, title: 'השלים את הבסיסי', icon: 'trophy-outline' },
   ];
-  const handleChoosePhoto = async () => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!permissionResult.granted) {
-      alert('Permission to access media library is required!');
-      return;
-    }
-
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-
-    if (!pickerResult.canceled && pickerResult.assets?.[0].uri) {
-      setProfileImage(pickerResult.assets[0].uri);
-      setModalVisible(false);
-    }
-  };
-
-  const handleTakePhoto = async () => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-    if (!permissionResult.granted) {
-      alert('Permission to access camera is required!');
-      return;
-    }
-
-    const cameraResult = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-
-    if (!cameraResult.canceled && cameraResult.assets?.[0].uri) {
-      setProfileImage(cameraResult.assets[0].uri);
-      setModalVisible(false);
-    }
-  };
-
-  const handleResetProfileImage = () => {
-    setProfileImage(null);
-    setModalVisible(false);
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Avatar Section */}
-      <View style={styles.avatarContainer}>
-        <Image
-          source={{
-            uri:
-              profileImage || `https://robohash.org/${user?.name || 'default'}`,
-          }}
-          style={styles.avatar}
-        />
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => setModalVisible(true)}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="add-circle" size={30} color={Colors.accent} />
-        </TouchableOpacity>
-      </View>
+      <Avatar avatar={avatar} setModalVisible={setModalVisible} />
 
       {/* User Information */}
       <Text style={styles.username}>{user?.name || 'אורח'}</Text>
@@ -129,7 +91,7 @@ export default function ProfileScreen() {
       <View style={styles.statsContainer}>
         <View style={styles.statItem}>
           <Ionicons name="flame-outline" size={24} color={Colors.accent} />
-          <Text style={styles.statText}>רצף: {user?.streak || 0}</Text>
+          <Text style={styles.statText}>רצף: {streak}</Text>
         </View>
         <View style={styles.statItem}>
           <Ionicons name="heart-outline" size={24} color={Colors.accent} />
@@ -142,61 +104,11 @@ export default function ProfileScreen() {
       </View>
 
       {/* Modal for Image Options */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
-      >
-        <Pressable
-          style={styles.modalOverlay}
-          onPress={() => setModalVisible(false)}
-        >
-          <View style={styles.modalContent}>
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={handleTakePhoto}
-            >
-              <Ionicons name="camera-outline" size={24} color={Colors.accent} />
-              <Text style={styles.modalButtonText}>תמונה</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={handleChoosePhoto}
-            >
-              <Ionicons name="image-outline" size={24} color={Colors.accent} />
-              <Text style={styles.modalButtonText}>בחירה מגלריה</Text>
-            </TouchableOpacity>
-            {/* Reset to Default Button */}
-            {profileImage && (
-              <TouchableOpacity
-                style={[styles.modalButton, styles.resetButton]}
-                onPress={handleResetProfileImage}
-              >
-                <Ionicons
-                  name="refresh-outline"
-                  size={24}
-                  color={Colors.accent}
-                />
-                <Text style={styles.modalButtonText}>ברירת מחדל</Text>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity
-              style={[styles.modalButton, styles.cancelButton]}
-              onPress={() => setModalVisible(false)}
-            >
-              <Ionicons
-                name="close-circle-outline"
-                size={24}
-                color={Colors.secondary}
-              />
-              <Text style={styles.modalButtonText}>ביטול</Text>
-            </TouchableOpacity>
-          </View>
-        </Pressable>
-      </Modal>
+      <ModalImageOptions
+        setAvatar={setAvatar}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
 
       {/* Badges Section */}
       <View style={styles.badgesContainer}>
@@ -237,35 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  avatarContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-    width: '100%',
-    height: 200,
-    justifyContent: 'flex-end',
-    backgroundColor: Colors.secondary,
-  },
-  avatar: {
-    width: 200,
-    height: 200,
-    borderRadius: 0,
-  },
-  addButton: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 4,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5, // For Android shadow
-  },
+
   username: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -326,35 +210,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.text,
   },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  modalButton: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    paddingVertical: 15,
-  },
-  resetButton: {
-    borderTopWidth: 1,
-    borderColor: Colors.secondary,
-    marginTop: 10,
-  },
-  cancelButton: {
-    marginTop: 10,
-  },
-  modalButtonText: {
-    fontSize: 18,
-    marginRight: 10,
-    color: Colors.accent,
-  },
+
   logoutButton: {
     alignItems: 'center',
     marginBottom: 20,
