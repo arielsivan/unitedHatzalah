@@ -1,5 +1,3 @@
-
-
 export interface EventProps {
   id: string;
   name: string;
@@ -7,44 +5,46 @@ export interface EventProps {
   location: string;
   emoji: string;
   date: string;
-  time : string;
+  time: string;
 }
-export interface Badge{
-    id : number;
-    title : string;
-    icon : string;
+export interface Badge {
+  id: number;
+  title: string;
+  icon: string;
 }
-export interface UserProf { 
-    name : string;
-    email : string;
-    gems : number;
-    hearts : number;
-    streak : number; // Date.now
-    avatar : string;
-    progress : any;
-    xp : number;
-    badges : Badge[];
+export interface UserProf {
+  name: string;
+  email: string;
+  gems: number;
+  hearts: number;
+  streak: number; // Date.now
+  avatar: string;
+  progress: any;
+  xp: number;
+  badges: Badge[];
 }
 
 export interface Course {
-    id : string;
-    title : string;
-    description : string;
-    image : string;
-    lessons : Lesson[];
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  lessons: Lesson[];
 }
 
 export interface Lesson {
-    id  : string;
-    icon : string;
-    color : string;
-    exercises : Exercise[];
+  id: string;
+  name?: string;
+  icon: string;
+  color: string;
+  exercises: Exercise[];
 }
 
 export interface Exercise {
-    id : string;
-    type : 'text-to-text' | 'text-to-image' | 'image-to-text' | 'image-to-image';
-    answers : string[];
-    correct : number;
-    question : string; //| Image;
+  id: string;
+  type: 'text-to-text' | 'text-to-image' | 'image-to-text' | 'image-to-image';
+  answers: string[];
+  correct: number;
+  question: string; //| Image;
+  subQuestion?: string;
 }
