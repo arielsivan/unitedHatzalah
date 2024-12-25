@@ -20,6 +20,7 @@ import { CustomButton } from '@/components/ui/CustomButton';
 import { Redirect, router } from 'expo-router';
 import Avatar from '@/components/Profile/Avatar';
 import ModalImageOptions from '@/components/Profile/ModalImageOptions';
+import NoItem from '@/components/NoItem';
 
 export default function ProfileScreen() {
   const HandleDeleteAccount = async () => {
@@ -53,24 +54,21 @@ export default function ProfileScreen() {
   const [avatar, setAvatar] = useState(user?.avatar || '');
   const [modalVisible, setModalVisible] = useState(false);
   const [streak, setStreak] = useState(0);
+
   const HandleLogout = () => {
     logout();
     router.replace('/auth/login');
   };
 
-  useEffect(() => {
-    if (user) {
-      const now = new Date(); // Current date and time
+  if (!user) return <NoItem text="אין משתמש " />;
 
-      // Calculate the difference in milliseconds
-      const diffInMs = now.getTime() - new Date(user.streak).getTime();
+  // Calculate the difference in milliseconds
+  const diffInMs = Date.now() - new Date(user.streak).getTime();
 
-      // Convert milliseconds to days, hours, minutes, etc.
-      const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-      setStreak(diffInDays);
-    }
-  }, [user]);
+  // Convert milliseconds to days, hours, minutes, etc.
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  alert('Your streak is ' + diffInDays + ' days.');
+  setStreak(2);
 
   const badges: Badge[] = [
     { id: 1, title: 'שיעור ראשון', icon: 'star-outline' },
