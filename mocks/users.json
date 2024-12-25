@@ -1,0 +1,80 @@
+[
+    {
+        "name": "אריאל סיון",
+        "email": "ariel543212@gmail.com",
+        "password": "123456",
+        "gems": 100,
+        "hearts": 5,
+        "streak": 2,
+        "avatar": "https://robohash.org/ariel-sivan",
+        "progress": {},
+        "badges": [],
+        "xp": 300,
+        "uid": 1
+    },
+    {
+        "name": "ג'ון דו",
+        "email": "john.doe@example.com",
+        "password": "password123",
+        "gems": 150,
+        "hearts": 3,
+        "streak": 5,
+        "avatar": "https://robohash.org/john-doe",
+        "progress": {},
+        "badges": [],
+        "xp": 4030,
+        "uid": 2
+    },
+    {
+        "name": "ג'יין סמית",
+        "email": "jane.smith@example.com",
+        "password": "password456",
+        "gems": 200,
+        "hearts": 4,
+        "streak": 1,
+        "avatar": "https://robohash.org/jane-smith",
+        "progress": {},
+        "badges": [],
+        "xp": 3040,
+        "uid": 3
+    },
+    {
+        "name": "אליס ג'ונסון",
+        "email": "alice.johnson@example.com",
+        "password": "password789",
+        "gems": 250,
+        "hearts": 6,
+        "streak": 3,
+        "avatar": "https://robohash.org/alice-johnson",
+        "progress": {},
+        "badges": [],
+        "xp": 400,
+        "uid": 4
+    },
+    {
+        "name": "בוב בראון",
+        "email": "bob.brown@example.com",
+        "password": "password101",
+        "gems": 300,
+        "hearts": 2,
+        "streak": 4,
+        "avatar": "https://robohash.org/bob-brown",
+        "progress": {},
+        "badges": [],
+        "xp": 1230,
+        "uid": 5
+    },
+    {
+        "name": "צ'ארלי דייוויס",
+        "email": "charlie.davis@example.com",
+        "password": "password202",
+        "gems": 350,
+        "hearts": 5,
+        "streak": 2,
+        "avatar": "https://robohash.org/charlie-davis",
+        "progress": {},
+        "badges": [],
+        "xp": 100,
+        "uid": 6
+    }
+]

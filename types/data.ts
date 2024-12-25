@@ -14,11 +14,16 @@ export interface Badge{
     icon : string;
 }
 export interface UserProf { 
+    uid : number;
     name : string;
     email : string;
+    password : string;
     gems : number;
     hearts : number;
     streak : number;
+    avatar : string;
+    progress : any;
+    xp : number;
     badges : Badge[];
 }
 
@@ -34,6 +39,7 @@ export interface Lesson {
     id : string;
     title : string;
     description : string;
+    disabled : boolean;
     icon : string;
     color : string;
     exercises : Exercise[];
@@ -41,8 +47,7 @@ export interface Lesson {
 
 export interface Exercise {
     id : string;
-    title : string;
-    type : 'choice' | 'fill'  | 'match';
+    type : 'text-to-text' | 'text-to-image' | 'image-to-text' | 'image-to-image';
     answers : string[];
     correct : number;
     question : string; //| Image;

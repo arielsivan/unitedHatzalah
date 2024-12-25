@@ -2,11 +2,10 @@ import LessonTree from '@/components/Course/LessonTree';
 import { mockCourses } from '@/mocks/courses';
 import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const CourseDetails = () => {
   const { courseId } = useLocalSearchParams();
-
 
   const course = mockCourses.find((c) => c.id === courseId);
 
@@ -21,8 +20,7 @@ const CourseDetails = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{course.title}</Text>
-      <LessonTree lessons={course.lessons} />
-      
+      <LessonTree {...course} />
     </View>
   );
 };
