@@ -3,6 +3,7 @@ import { Colors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
+import Effy from '../ui/Effy';
 
 export default function FinishScreen ({
   heartsReamings = 5,
@@ -43,38 +44,7 @@ export default function FinishScreen ({
 
   return (
     <View style={styles.container}>
-      {/* Fireworks */}
-      <Animated.View style={[styles.fireworks, { opacity: fireworksAnim }]}>
-        <Text style={styles.fireworkDot}>✨</Text>
-        <Text style={styles.fireworkDot}>✨</Text>
-      </Animated.View>
-
-      {/* Character */}
-      <Animated.View
-        style={[
-          styles.characterContainer,
-          {
-            transform: [
-              {
-                scale: bounceAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [0.3, 1],
-                }),
-              },
-            ],
-          },
-        ]}
-      >
-        <View style={styles.character}>
-          <View style={styles.head}>
-            <View style={styles.face} />
-          </View>
-          <View style={styles.body} />
-        </View>
-        <View style={styles.owl}>
-          <Text style={styles.owlText}>🦉</Text>
-        </View>
-      </Animated.View>
+        <Effy feeling='sad'/>
 
       {/* Text content */}
       <Text style={styles.titleText}>
@@ -125,49 +95,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
-  fireworks: {
-    position: 'absolute',
-    top: '20%',
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 40,
-  },
-  fireworkDot: {
-    fontSize: 24,
-  },
-  characterContainer: {
-    marginBottom: 30,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  character: {
-    alignItems: 'center',
-  },
-  head: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#FFB6C1',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  face: {
-    width: 40,
-    height: 20,
-    backgroundColor: '#FFA07A',
-    borderRadius: 10,
-  },
-  body: {
-    width: 40,
-    height: 60,
-    backgroundColor: '#87CEEB',
-    borderRadius: 20,
-    marginTop: -10,
-  },
-  owl: {
-    marginLeft: 10,
-  },
   owlText: {
     fontSize: 40,
   },
@@ -216,6 +143,7 @@ const styles = StyleSheet.create({
   },
   timeIcon: {
     fontSize: 16,
+    color : Colors.white,
   },
   targetIcon: {
     fontSize: 16,
