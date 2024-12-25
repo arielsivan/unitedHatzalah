@@ -13,9 +13,10 @@ import { Colors } from '@/constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { useAuthStore } from '@/stores/authStore';
-import { CustomButton } from '@/components/CustomButton';
-import BackArrow from '@/components/BackArrow';
-import CustomInput from '@/components/CustomInput';
+import BackArrow from '@/components/ui/BackArrow';
+import { CustomButton } from '@/components/ui/CustomButton';
+import CustomInput from '@/components/ui/CustomInput';
+
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -88,7 +89,7 @@ export default function SignUp() {
       <CustomButton
         backgroundColor={Colors.white}
         title={'התחבר'}
-        handlePress={() => router.push('/auth/sign-in')}
+        handlePress={() => router.replace('/auth/login')}
       ></CustomButton>
     </View>
   );

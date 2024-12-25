@@ -1,16 +1,23 @@
 import React from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { mockCourses } from '@/mocks/courses';
 import { useRouter } from 'expo-router';
 
-export default function Courses(){
+export default function Courses() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Courses</Text>
-      <FlatList
+      {/* <FlatList
         data={mockCourses}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
@@ -24,10 +31,21 @@ export default function Courses(){
             <Text style={styles.courseDescription}>{item.description}</Text>
           </TouchableOpacity>
         )}
-      />
+      /> */}
+      {mockCourses.map((course,index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.courseCard}
+          onPress={() => router.push(`/course/${course.id}`)}
+        >
+          <Image source={{ uri: course.image }} style={styles.courseImage} />
+          <Text style={styles.courseTitle}>{course.title}</Text>
+          <Text style={styles.courseDescription}>{course.description}</Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

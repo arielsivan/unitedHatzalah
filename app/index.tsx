@@ -8,7 +8,7 @@ export default function Index() {
 
   return (
     <View style={{ flex: 1 }}>
-      {user ? <Redirect href={'/index' as any} /> : <Login />}
+      <Redirect href={'/auth/login' as any} /> 
     </View>
   );
 }

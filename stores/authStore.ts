@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
 } from 'firebase/auth';
 import { auth, db } from '@/configs/FirebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
@@ -12,7 +11,6 @@ import { UserProf } from '@/types/data';
 interface AuthState {
   isAuthenticated: boolean;
   user: UserProf | null;
-  token: string | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   createUser: (
@@ -22,24 +20,25 @@ interface AuthState {
   ) => Promise<void>;
   logout: () => void;
   fetchUserData: (userId: string) => Promise<void>;
+  updateAvatar : (avatar: string) => void;
 }
 
 /**
  * Auth store for managing authentication state.
- * 
+ *
  * @typedef {Object} AuthState
  * @property {boolean} isAuthenticated - Indicates if the user is authenticated.
  * @property {UserProf | null} user - The authenticated user's profile data.
  * @property {string | null} token - The authentication token.
  * @property {boolean} loading - Indicates if an authentication-related operation is in progress.
- * 
+ *
  * @function login
  * @async
  * @param {string} email - The user's email address.
  * @param {string} password - The user's password.
  * @description Authenticates the user with the provided email and password.
  * Sets the loading state to true during the process and updates the store with the user's authentication state upon success or failure.
- * 
+ *
  * @function createUser
  * @async
  * @param {string} email - The new user's email address.
@@ -47,11 +46,11 @@ interface AuthState {
  * @param {string} fullName - The new user's full name.
  * @description Creates a new user with the provided email, password, and full name.
  * Sets the loading state to true during the process and updates the store with the user's authentication state upon success or failure.
- * 
+ *
  * @function logout
  * @description Logs out the current user.
  * Sets the loading state to true during the process and updates the store to reflect the user's logged-out state.
- * 
+ *
  * @function fetchUserData
  * @async
  * @param {string} userId - The ID of the user whose data is to be fetched.
@@ -61,7 +60,6 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   user: null,
-  token: null,
   loading: false, // Initialize loading state as false
 
   login: async (email, password) => {
@@ -76,7 +74,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       set({
         isAuthenticated: true,
-        token: user.uid,
         loading: false, // Set loading to false when login is successful
       });
 
@@ -97,15 +94,20 @@ export const useAuthStore = create<AuthState>((set) => ({
         email,
         password,
       );
+
       const user = userCredential.user;
+      const today = new Date();
 
       const userData: UserProf = {
         name: fullName,
         email,
         gems: 0,
         hearts: 5,
-        streak: 0,
+        streak: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
         badges: [],
+        avatar: 'https://robohash.org/' + fullName,
+        progress: undefined,
+        xp: 0,
       };
 
       await setDoc(doc(db, 'users', user.uid), userData);
@@ -113,7 +115,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({
         isAuthenticated: true,
         user: userData,
-        token: user.uid,
         loading: false, // Set loading to false after account creation
       });
 
@@ -129,7 +130,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: () => {
     set({ loading: true }); // Set loading to true during logout
     auth.signOut();
-    set({ isAuthenticated: false, user: null, token: null, loading: false }); // Set loading to false after logout
+    set({ isAuthenticated: false, user: null, loading: false }); // Set loading to false after logout
     console.log('User logged out');
   },
 
@@ -151,4 +152,29 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user: null, loading: false }); // Set loading to false in case of error
     }
   },
+
+  updateAvatar: async (avatar: string) => {
+    const currentUser = useAuthStore.getState().user;
+    if (currentUser) {
+      const userId = auth.currentUser?.uid;
+      if (!userId) {
+        console.error("User ID not found");
+        return;
+      }
+  
+      try {
+        // Update the avatar in Firestore
+        const userRef = doc(db, "users", userId);
+        await setDoc(userRef, { avatar }, { merge: true });
+  
+        // Update the local store
+        set({ user: { ...currentUser, avatar } });
+  
+        ToastAndroid.show("Avatar updated successfully!", ToastAndroid.LONG);
+      } catch (error: any) {
+        console.error("Failed to update avatar:", error);
+        ToastAndroid.show("Failed to update avatar", ToastAndroid.LONG);
+      }
+    }
+  }  
 }));

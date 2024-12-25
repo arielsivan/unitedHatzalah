@@ -7,9 +7,10 @@ interface Props {
   placeholder?: string;
   handleTextChange?: (value: string) => void;
   secureTextEntry?: boolean; 
+  sendInput? : boolean;
 }
 
-export default function CustomInput({ placeholder, handleTextChange, secureTextEntry }: Props) {
+export default function CustomInput({ placeholder, handleTextChange, secureTextEntry ,sendInput}: Props) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(!secureTextEntry);
 
   return (
@@ -27,6 +28,18 @@ export default function CustomInput({ placeholder, handleTextChange, secureTextE
         >
           <Ionicons
             name={isPasswordVisible ? 'eye' : 'eye-off'}
+            size={24}
+            color="#a5a5a5"
+          />
+        </TouchableOpacity>
+      )}
+      {sendInput && (
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => setIsPasswordVisible((prev) => !prev)}
+        >
+          <Ionicons
+            name='send'
             size={24}
             color="#a5a5a5"
           />

@@ -9,6 +9,7 @@ interface Props {
   rounded?: boolean;
   fontSize?: number;
   handlePress?: () => void;
+  disabled?: boolean;
 }
 
 export function CustomButton({
@@ -18,6 +19,7 @@ export function CustomButton({
   rounded = false,
   fontSize = 18,
   handlePress = () => {},
+  disabled = false,
 }: Props) {
   const { lighten, darken } = useColorAdjust();
   const adjustedBackgroundColor = darken(backgroundColor, 20);
@@ -28,13 +30,19 @@ export function CustomButton({
       <Pressable
         style={({ pressed }) => [
           styles.button,
-          pressed
+          pressed && !disabled
             ? styles.buttonPressed
             : { boxShadow: '0 5px 0 ' + adjustedBackgroundColor },
-          { backgroundColor },
+          {
+            backgroundColor: disabled
+              ? lighten(backgroundColor, 50)
+              : backgroundColor,
+          },
           rounded && styles.rounded,
+          disabled && styles.disabled,
         ]}
-        onPress={handlePress}
+        onPress={!disabled ? handlePress : undefined}
+        disabled={disabled}
       >
         <Text style={[styles.text, { color: adjustColor, fontSize: fontSize }]}>
           {title}
@@ -72,5 +80,8 @@ const styles = StyleSheet.create({
     margin: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  disabled: {
+    opacity: 0.2,
   },
 });

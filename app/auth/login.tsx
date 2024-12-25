@@ -4,14 +4,17 @@ import {
   StyleSheet,
   ToastAndroid,
   I18nManager,
+  TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { useAuthStore } from '@/stores/authStore';
-import { CustomButton } from '@/components/CustomButton';
-import BackArrow from '@/components/BackArrow';
-import CustomInput from '@/components/CustomInput';
+import BackArrow from '@/components/ui/BackArrow';
+import { CustomButton } from '@/components/ui/CustomButton';
+import CustomInput from '@/components/ui/CustomInput';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function SignIn() {
   const navigation = useNavigation();
@@ -53,21 +56,28 @@ export default function SignIn() {
   };
 
   return (
+    <ImageBackground
+          source={require('@/assets/background.jpg')} // עדכן את הנתיב לפי המיקום המדויק
+          style={styles.background}
+        >
     <View style={styles.container}>
-      <BackArrow />
 
       <Text style={styles.title}>בואו נתחבר</Text>
       <Text style={styles.subtitle}>ברוכים הבאים</Text>
 
       {/* Email Input */}
       <CustomInput placeholder="הכניסו אימייל" handleTextChange={setEmail} />
-      
+
       {/* Password Input */}
-      <CustomInput placeholder="הכניסו סיסמה" handleTextChange={setPassword} secureTextEntry={true} />
+      <CustomInput
+        placeholder="הכניסו סיסמה"
+        handleTextChange={setPassword}
+        secureTextEntry={true}
+      />
 
       {/* Sign In Button */}
       <CustomButton
-        backgroundColor={Colors.blue}
+        backgroundColor={Colors.accent}
         title={'התחבר'}
         handlePress={onSignIn}
       ></CustomButton>
@@ -80,31 +90,48 @@ export default function SignIn() {
 
       {/* Create Account Button */}
       <CustomButton
-        backgroundColor={Colors.white}
+        backgroundColor={Colors.accent}
         title={'צור חשבון'}
-        handlePress={() => router.push('/auth/sign-up')}
+        handlePress={() => router.push('/auth/register')}
       ></CustomButton>
+
+      {/* אייקון דלת */}
+      <TouchableOpacity
+        style={styles.iconButton}
+        onPress={() => router.push('/(tabs)')}
+      >
+        <Ionicons name="exit-outline" size={28} color={Colors.orange} />
+      </TouchableOpacity>
     </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover', // מתאים את התמונה למסך
+  },
+
   container: {
+    ...StyleSheet.absoluteFillObject, // ממלא את כל המסך
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     padding: 30,
     height: '100%',
-    backgroundColor: Colors.accent,
+    // backgroundColor: Colors.accent,
     gap: 10,
   },
 
   title: {
+    marginTop: 100,
     fontSize: 32,
     marginBottom: 10,
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 24,
-    color: Colors.white,
+    color: 'black',
     textAlign: 'center',
     marginBottom: 30,
   },
@@ -141,5 +168,19 @@ const styles = StyleSheet.create({
   dividerSpan: {
     color: 'black',
     fontSize: 18,
+  },
+
+  iconButton: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    backgroundColor: Colors.white,
+    padding: 10,
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
 });

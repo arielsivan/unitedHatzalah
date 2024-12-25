@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import Character from './Character';
 import DialogBalloon from './DialogBalloon';
 import ChoiceQuestion from './ChoiceQuestion';
-import { CustomButton } from '../CustomButton';
+import { CustomButton } from '../ui/CustomButton';
 import { mockDialogSteps } from '@/mocks/story';
 
 const StoryScene = () => {

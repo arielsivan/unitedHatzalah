@@ -5,7 +5,7 @@ const ChoiceQuestion = ({ question, choices, onSelect } : any) => {
   return (
     <View style={styles.container}>
       <Text style={styles.question}>{question}</Text>
-      {choices.map((choice : any, index : any) => (
+      {choices.map((choice : string, index : number) => (
         <TouchableOpacity
           key={index}
           style={styles.choice}

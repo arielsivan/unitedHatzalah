@@ -8,9 +8,9 @@ export default function EventsScreen() {
 
   return (
     <ScrollToTopContainer>
-      {myEvents.map((event) => (
+      {myEvents.map((event,key) => (
         <SingleEvent
-          key={event.id}
+          key={key}
           id={event.id}
           name={event.name}
           description={event.description}

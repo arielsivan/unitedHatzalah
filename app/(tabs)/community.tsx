@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import React from 'react';
 import MockCards from '@/mocks/community';
-import Qcard from '@/components/communityCards/Qcard';
+import Qcard from '@/components/Community/Qcard';
 import { ScrollView } from 'react-native-gesture-handler';
+import ScrollToTopContainer from '@/components/ui/ScrollToTopContainer';
 
 export default function Community() {
   return (
@@ -11,11 +12,11 @@ export default function Community() {
       style={styles.background}
     >
       <View style={styles.overlay} />
-      <ScrollView contentContainerStyle={styles.container}>
-        {MockCards.map((card) => (
-          <Qcard key={card.id} title={card.title} />
+      <ScrollToTopContainer contentContainerStyle={styles.container}>
+        {MockCards.map((card,key) => (
+          <Qcard key={key} title={card.title} id={card.id} />
         ))}
-      </ScrollView>
+      </ScrollToTopContainer>
     </ImageBackground>
   );
 }

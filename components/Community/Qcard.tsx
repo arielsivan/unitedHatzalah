@@ -2,18 +2,26 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors }  from '@/constants/Colors';
+import { router } from 'expo-router';
 
 interface Props {
   title: string;
+  id: any;
 }
 
-export default function Qcard({ title }: Props) {
+
+export default function Qcard({ title,id }: Props) {
+  
+const handlePress = () => {
+  router.push(`/community/${id}`);
+};
+
   return (
     <View style={styles.card}>
       <Text style={styles.text}>{title}</Text>
       <TouchableOpacity
         style={styles.iconContainer}
-        onPress={() => console.log('Pressed')}>
+        onPress={handlePress}>
         <Ionicons name="arrow-back" size={24} color="#FFF" />
       </TouchableOpacity>
     </View>

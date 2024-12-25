@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import events from '@/mocks/event';
-import BackArrow from '@/components/BackArrow';
+import BackArrow from '@/components/ui/BackArrow';
 import MapsAPI from '@/components/MapsAPI'; // Assuming MapsAPI is located here
 
 const EventInformation: React.FC = () => {
