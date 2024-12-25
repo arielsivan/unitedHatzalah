@@ -14,13 +14,11 @@ export interface Badge{
     icon : string;
 }
 export interface UserProf { 
-    uid : number;
     name : string;
     email : string;
-    password : string;
     gems : number;
     hearts : number;
-    streak : number;
+    streak : Date;
     avatar : string;
     progress : any;
     xp : number;

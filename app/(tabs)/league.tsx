@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import mockUsers from '@/mocks/users.json';
 import ScrollToTopContainer from '@/components/ui/ScrollToTopContainer';
 import { UserProf } from '@/types/data';
-import { useUserAStore } from '@/stores/userStore';
 
 export default function Leaderboard() {
-  const [users, setUsers] = useState<UserProf[]>([]);
+    let users = mockUsers as UserProf[];
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      await useUserAStore.getState().initializeUsers();
-      setUsers(useUserAStore.getState().users);
-    };
-
-    fetchUsers();
-    console.log(users);
-  }, []);
 
   const UserLeague = ({ item, index }: { item: UserProf; index: number }) => (
     <View style={styles.itemContainer}>
@@ -29,7 +20,7 @@ export default function Leaderboard() {
         <Text style={styles.rank}>{index + 1}</Text>
       )}
       <Image
-        source={{ uri: `https://robohash.org/${index}` }}
+        source={{ uri: 'https://robohash.org/' + index }}
         style={styles.avatar}
       />
       <View style={styles.userInfo}>
@@ -45,7 +36,7 @@ export default function Leaderboard() {
       {users
         .sort((a, b) => b.xp - a.xp)
         .map((user, index) => (
-          <UserLeague item={user} index={index} key={user.uid} />
+          <UserLeague item={user} index={index} key={index} />
         ))}
     </ScrollToTopContainer>
   );
@@ -75,6 +66,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     backgroundColor: '#ffffff',
     borderRadius: 15,
+    boxShadow: '0px 4px 6px rgb(0, 0, 0, 0.1)',
+
     elevation: 5,
   },
   rank: {
