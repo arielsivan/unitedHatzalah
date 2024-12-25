@@ -28,7 +28,14 @@ const emergencySynonyms: { [key: string]: string[] } = {
   Evacuation: ['leave', 'exit', 'evacuate'],
   Other: ['miscellaneous', 'other', 'general emergency'],
   'First Aid': ['aid', 'help', 'assistance'],
-  CPR: ['cardiopulmonary resuscitation', 'cpr'],
+  החייאה: [
+    'cardiopulmonary resuscitation',
+    'cpr',
+    'התקף',
+    'התקפת לב',
+    'התקף לב',
+    'לב',
+  ],
   'Report Incident': ['report', 'incident', 'alert'],
   'Safety Tips': ['tips', 'safety', 'advice'],
   'Contact Support': ['support', 'help', 'assistance'],
@@ -49,7 +56,7 @@ const topButtons: ButtonData[] = [
 
 const bottomButtons: ButtonData[] = [
   { id: 10, title: 'First Aid' },
-  { id: 11, title: 'CPR' },
+  { id: 11, title: 'החייאה' },
   { id: 12, title: 'Report Incident' },
   { id: 13, title: 'Safety Tips' },
   { id: 14, title: 'Contact Support' },
@@ -62,13 +69,14 @@ const EmergencyScreen: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [noResults, setNoResults] = useState<boolean>(false);
 
-  const handleButtonPress = (title: string) => {
-    const emergencyInfo = emergencyData[title];
+  const handleButtonPress = (id: number) => {
+    const emergencyInfo = emergencyData[id];
     if (emergencyInfo) {
       setSelectedEmergency(emergencyInfo);
     } else {
       setSelectedEmergency({
-        header: title,
+        id: id,
+        header: 'Emergency Not Found',
         steps: ['No information available for this emergency type.'],
       });
     }
@@ -78,18 +86,23 @@ const EmergencyScreen: React.FC = () => {
     setSelectedEmergency(null);
   };
 
-  // Function to map search query to emergency titles based on synonyms
-  const mapQueryToEmergency = (query: string): string[] => {
+  // Function to map search query to emergency IDs based on synonyms
+  const mapQueryToEmergency = (query: string): number[] => {
     const lowerQuery = query.toLowerCase();
-    const matchedTitles: string[] = [];
+    const matchedIds: number[] = [];
 
     for (const [title, synonyms] of Object.entries(emergencySynonyms)) {
       if (synonyms.includes(lowerQuery)) {
-        matchedTitles.push(title);
+        const foundEntry = Object.values(emergencyData).find(
+          (info) => info.header.toLowerCase().includes(title.toLowerCase())
+        );
+        if (foundEntry) {
+          matchedIds.push(foundEntry.id);
+        }
       }
     }
 
-    return matchedTitles;
+    return matchedIds;
   };
 
   // Function to filter buttons based on search query and synonyms
@@ -99,12 +112,12 @@ const EmergencyScreen: React.FC = () => {
       return buttons;
     }
 
-    const matchedTitles = mapQueryToEmergency(searchQuery.trim());
+    const matchedIds = mapQueryToEmergency(searchQuery.trim());
 
     return buttons.filter(
       (button) =>
         button.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        matchedTitles.includes(button.title)
+        matchedIds.includes(button.id)
     );
   };
 
@@ -142,7 +155,7 @@ const EmergencyScreen: React.FC = () => {
           <TouchableOpacity
             key={button.id}
             style={styles.topButton}
-            onPress={() => handleButtonPress(button.title)}
+            onPress={() => handleButtonPress(button.id)}
             accessibilityLabel={`Emergency option: ${button.title}`}
           >
             <Text style={styles.topButtonText}>{button.title}</Text>
@@ -156,7 +169,7 @@ const EmergencyScreen: React.FC = () => {
           <TouchableOpacity
             key={button.id}
             style={styles.bottomButton}
-            onPress={() => handleButtonPress(button.title)}
+            onPress={() => handleButtonPress(button.id)}
             accessibilityLabel={`Emergency option: ${button.title}`}
           >
             <Text style={styles.bottomButtonText}>{button.title}</Text>
