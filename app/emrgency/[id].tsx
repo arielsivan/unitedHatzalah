@@ -5,10 +5,10 @@ import { useLocalSearchParams } from 'expo-router';
 import { emergencyData, EmergencyInfo } from '@/mocks/emergencyData';
 
 const EmergencyDetail: React.FC = () => {
-  const { title } = useLocalSearchParams();
+  const { id } = useLocalSearchParams();
 
   const emergencyInfo: EmergencyInfo | undefined =
-    emergencyData[title as string];
+    emergencyData[Number(id)];
 
   if (!emergencyInfo) {
     return (
@@ -23,6 +23,9 @@ const EmergencyDetail: React.FC = () => {
       <EmergencyCard
         header={emergencyInfo.header}
         steps={emergencyInfo.steps}
+        onClose={() => {
+          // Handle navigation or state change to close the card
+        }}
       />
     </View>
   );

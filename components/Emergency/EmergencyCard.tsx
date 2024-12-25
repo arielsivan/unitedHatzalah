@@ -5,7 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Ensure you have expo/vector-icons installed
 
 type EmergencyCardProps = {
   header: string;
@@ -18,6 +20,10 @@ const EmergencyCard: React.FC<EmergencyCardProps> = ({
   steps,
   onClose,
 }) => {
+  const handleCall = () => {
+    Linking.openURL('tel:101');
+  };
+
   return (
     <View style={styles.overlay}>
       <View style={styles.card}>
@@ -32,11 +38,21 @@ const EmergencyCard: React.FC<EmergencyCardProps> = ({
         <ScrollView style={styles.stepsContainer}>
           {steps.map((step, index) => (
             <View key={index} style={styles.stepContainer}>
-              <Text style={styles.stepNumber}>{index + 1}.</Text>
+              <Text style={styles.stepNumber}>.{index + 1}</Text>
               <Text style={styles.stepText}>{step}</Text>
             </View>
           ))}
         </ScrollView>
+        {/* Call 101 Button */}
+        <TouchableOpacity style={styles.callButton} onPress={handleCall}>
+          <Ionicons
+            name="call"
+            size={24}
+            color="#fff"
+            style={styles.callIcon}
+          />
+          <Text style={styles.callButtonText}>התקשר ל-101</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -94,7 +110,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   stepContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse', // Changed from 'row' to 'row-reverse' to align numbers on the right
     alignItems: 'flex-start',
     marginBottom: 10,
   },
@@ -102,11 +118,31 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#555',
-    marginRight: 8,
+    marginLeft: 8, // Changed from marginRight to marginLeft
+    writingDirection: 'ltr', // Ensure number and dot are rendered left-to-right
   },
   stepText: {
     flex: 1,
     fontSize: 16,
     color: '#555',
+    writingDirection: 'rtl', // Ensure the text is right-to-left
+  },
+  callButton: {
+    flexDirection: 'row-reverse', // Changed to 'row-reverse' for RTL alignment
+    alignItems: 'center',
+    backgroundColor: '#dc3545', // Red color for emergency
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  callIcon: {
+    marginLeft: 10, // Changed to marginLeft for RTL
+  },
+  callButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 10, // Added margin for spacing between icon and text
   },
 });

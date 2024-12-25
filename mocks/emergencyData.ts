@@ -1,91 +1,102 @@
-export type EmergencyInfo = {
+export interface EmergencyInfo {
+  id: number;
   header: string;
   steps: string[];
-};
+}
 
-export const emergencyData: { [key: string]: EmergencyInfo } = {
-  Fire: {
+export const emergencyData: { [key: number]: EmergencyInfo } = {
+  1: {
+    id: 1,
     header: 'Fire Safety Steps',
     steps: [
-      'Stay calm and evacuate the area immediately.',
-      'Call emergency services (911) once you are in a safe location.',
-      "Use a fire extinguisher if trained and it's safe to do so.",
-      'Do not re-enter the building until authorities declare it safe.',
+      'Ensure the area is safe.',
+      'Alert others and evacuate if necessary.',
+      'Call the fire department (101).',
+      'Use a fire extinguisher if trained.',
     ],
   },
-  Medical: {
+  2: {
+    id: 2,
     header: 'Medical Emergency Steps',
     steps: [
+      'Assess the situation for safety.',
       'Check the victim’s responsiveness and breathing.',
-      'Call emergency services (911) for assistance.',
-      'Provide first aid within your training level.',
-      'Stay with the victim until help arrives.',
+      'Provide necessary first aid within your training.',
+      'Monitor the victim until professional help arrives.',
     ],
   },
-  Police: {
-    header: 'Police Emergency Steps',
+  3: {
+    id: 3,
+    header: 'Police Assistance Steps',
     steps: [
       'Ensure your safety and the safety of others.',
-      'Call emergency services (911) to report the incident.',
-      'Provide clear and accurate information about the situation.',
-      'Follow the instructions given by the dispatcher.',
+      'Report the incident to the police (101).',
+      'Provide accurate information about the situation.',
+      'Cooperate with law enforcement officials.',
     ],
   },
-  'Natural Disaster': {
-    header: 'Natural Disaster Preparedness Steps',
+  4: {
+    id: 4,
+    header: 'Natural Disaster Response Steps',
     steps: [
-      'Stay informed about weather updates and warnings.',
-      'Have an emergency kit ready with essentials.',
+      'Stay informed about the disaster.',
       'Follow evacuation orders if issued.',
-      'Help others who may need assistance.',
+      'Secure necessary supplies and emergency kits.',
+      'Help others in need while ensuring your safety.',
     ],
   },
-  'Roadside Assistance': {
+  5: {
+    id: 5,
     header: 'Roadside Assistance Steps',
     steps: [
-      'Ensure your vehicle is safe and turn on hazard lights.',
-      'Call roadside assistance service for help.',
-      'Stay inside the vehicle if it is safe to do so.',
-      'Wait for professionals to arrive and assist you.',
+      'Ensure your vehicle is in a safe location.',
+      'Call roadside assistance (101) for help.',
+      'Use warning signals to alert other drivers.',
+      'Follow the instructions provided by the assistance team.',
     ],
   },
-  'Search & Rescue': {
-    header: 'Search & Rescue Steps',
+  6: {
+    id: 6,
+    header: 'Search & Rescue Operations Steps',
     steps: [
-      'Report the missing person to authorities immediately.',
-      'Provide detailed information about the missing person.',
-      'Assist rescue teams by providing any helpful information.',
-      'Follow safety guidelines provided by rescue teams.',
+      'Report missing persons to authorities (101).',
+      'Provide detailed information about the missing individuals.',
+      'Assist in search efforts if trained and safe to do so.',
+      'Stay updated with rescue operation communications.',
     ],
   },
-  HazMat: {
-    header: 'Hazardous Materials Emergency Steps',
+  7: {
+    id: 7,
+    header: 'Hazardous Materials (HazMat) Response Steps',
     steps: [
-      'Evacuate the area immediately.',
-      'Call emergency services and report the HazMat incident.',
-      'Avoid contact with any hazardous materials.',
-      'Follow instructions from emergency responders.',
+      'Identify the hazardous material involved.',
+      'Evacuate the area to prevent exposure.',
+      'Call HazMat teams (101) for specialized assistance.',
+      'Do not attempt to handle or contain the materials yourself.',
     ],
   },
-  Evacuation: {
-    header: 'Evacuation Steps',
+  8: {
+    id: 8,
+    header: 'Evacuation Procedures Steps',
     steps: [
-      'Stay calm and follow evacuation routes.',
-      'Do not use elevators; use stairs instead.',
-      'Assist others who may need help evacuating.',
-      'Proceed to the designated safe area.',
+      'Follow official evacuation orders promptly.',
+      'Know the nearest evacuation routes and shelters.',
+      'Secure your home and necessary belongings.',
+      'Assist others who may need help during evacuation.',
     ],
   },
-  Other: {
-    header: 'Emergency Steps',
+  9: {
+    id: 9,
+    header: 'General Emergency Steps',
     steps: [
-      'Assess the situation and ensure your safety.',
-      'Call the appropriate emergency services.',
-      'Provide clear information about the emergency.',
-      'Follow the instructions given by emergency responders.',
+      'Stay calm and assess the situation.',
+      'Ensure your safety and the safety of others.',
+      'Call the appropriate emergency service (101).',
+      'Provide clear and concise information to responders.',
     ],
   },
-  'First Aid': {
+  10: {
+    id: 10,
     header: 'First Aid Steps',
     steps: [
       'Assess the situation for safety.',
@@ -94,41 +105,44 @@ export const emergencyData: { [key: string]: EmergencyInfo } = {
       'Monitor the victim until professional help arrives.',
     ],
   },
-  CPR: {
-    header: 'CPR Steps',
+  11: {
+    id: 11,
+    header: 'החייאה ופעולות חירום',
     steps: [
-      'Ensure the scene is safe.',
-      'Check responsiveness and breathing.',
-      'Call emergency services (911) if unresponsive.',
-      'Begin CPR with chest compressions and rescue breaths.',
+      'וודא שהמקום בטוח.',
+      'בדוק תגובה ונשימה.',
+      'התחל בהחייאה עם לחיצות חזה ונשימות מצילות.',
+      'קרא לשירותי חירום (101) אם אין תגובה.',
     ],
   },
-  'Report Incident': {
+  12: {
+    id: 12,
     header: 'Report Incident Steps',
     steps: [
-      'Ensure your safety before acting.',
-      'Record essential details of the incident.',
-      'Contact the appropriate authorities to report.',
-      'Provide accurate and concise information.',
+      'דווח על האירוע לשירותי חירום (101).',
+      'ספק מידע מדויק על המיקום והטבע של האירוע.',
+      'עקוב אחר הוראות הנציג בשירות החירום.',
+      'הישאר בטוח והמתן לעזרה נוספת במידת הצורך.',
     ],
   },
-  'Safety Tips': {
-    header: 'General Safety Tips',
+  13: {
+    id: 13,
+    header: 'Safety Tips Steps',
     steps: [
-      'Stay aware of your surroundings.',
-      'Maintain a safe distance from potential hazards.',
-      'Keep emergency contacts accessible.',
-      'Participate in regular safety training.',
+      'שמור על ערנות והיה מודע לסביבתך.',
+      'הכן ערכת חירום עם אביזרים חיוניים.',
+      'למד דרכי בריחה ובטיחות למקרי חירום.',
+      'השתתף בהדרכות והכשרות לבטיחות.',
     ],
   },
-  'Contact Support': {
+  14: {
+    id: 14,
     header: 'Contact Support Steps',
     steps: [
-      'Identify the appropriate support service needed.',
-      'Gather necessary information before making the call.',
-      'Communicate your needs clearly and calmly.',
-      'Follow any instructions provided by the support representative.',
+      'התקשר לתמיכה (101) לצורך עזרה מיידית.',
+      'ספק את פרטי הבעיה והנזק שנגרם.',
+      'עקוב אחר ההוראות שניתנות על ידי נציג התמיכה.',
+      'השאר במקום הבטוח והמתן לעזרה.',
     ],
   },
-  // Add more mappings for other emergency types as needed...
 };
