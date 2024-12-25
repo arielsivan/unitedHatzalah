@@ -5,8 +5,9 @@ import {
 } from 'firebase/auth';
 import { auth, db } from '@/configs/FirebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { ToastAndroid } from 'react-native';
+import { Platform, ToastAndroid } from 'react-native';
 import { UserProf } from '@/types/data';
+
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -86,46 +87,54 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
+
+
   createUser: async (email, password, fullName) => {
     set({ loading: true }); // Set loading to true when creating a new user
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+  
       const today = new Date();
-
       const userData: UserProf = {
         name: fullName,
         email,
         gems: 0,
         hearts: 5,
-        streak: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
+        streak: Date.now(),
         badges: [],
-        avatar: 'https://robohash.org/' + fullName,
-        progress: undefined,
+        avatar: `https://robohash.org/${fullName}`,
+        progress: null,
         xp: 0,
       };
-
+  
+      console.log('Adding user to Firestore:', userData);
+  
       await setDoc(doc(db, 'users', user.uid), userData);
-
+      console.log('User successfully added to Firestore');
+  
       set({
         isAuthenticated: true,
         user: userData,
         loading: false, // Set loading to false after account creation
       });
-
-      ToastAndroid.show('Account created successfully!', ToastAndroid.LONG);
+  
+      if (Platform.OS === 'android' || Platform.OS === 'ios') {
+        ToastAndroid.show('Account created successfully!', ToastAndroid.LONG);
+      } else {
+        alert('Account created successfully!');
+      }
     } catch (error: any) {
-      console.error('Account creation failed:', error);
-      const errorMsg = error.message;
-      ToastAndroid.show(errorMsg, ToastAndroid.LONG);
+      console.error('Account creation failed:', error.message);
+      if (Platform.OS === 'android' || Platform.OS === 'ios') {
+        ToastAndroid.show(error.message, ToastAndroid.LONG);
+      } else {
+        alert(error.message);
+      }
       set({ loading: false }); // Set loading to false if account creation fails
     }
   },
+  
 
   logout: () => {
     set({ loading: true }); // Set loading to true during logout
