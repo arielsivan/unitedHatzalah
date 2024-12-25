@@ -5,41 +5,56 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Effy from '../ui/Effy';
 import StatsBox from './StatsBox';
+import { useAuthStore } from '@/stores/authStore';
+
+interface FinishScreenProps {
+  heartsReaming?: number;
+  totalXP?: number;
+  committed?: string;
+  id: string;
+}
 
 export default function FinishScreen({
   heartsReaming = 5,
   totalXP = 15,
   committed = '2 דקות',
-}) {
+  id,
+}: FinishScreenProps) {
   const router = useRouter();
   const success = heartsReaming > 0;
-  return (
-    <View style={styles.container}>
-      <Effy feeling={success ? 'happy' : 'sad'} />
+  const updateProgress = useAuthStore((state) => state.updateProgress);
+  
+  if (success && id) updateProgress(id);
 
-      {/* Text content */}
-      <Text style={styles.titleText}>{success ? 'כל הכבוד!' : 'נסה שוב!'}</Text>
-      <Text style={styles.subText}>
-        {success
-          ? 'כל שיעור מקרב אותך בדרך להצלת חיים!'
-          : 'הפעם לא הצלחת, נסה שוב בפעם הבאה!'}
-      </Text>
+    return (
+      <View style={styles.container}>
+        <Effy feeling={success ? 'happy' : 'sad'} />
 
-      {/* Stats container */}
-      <View style={styles.statsContainer}>
-        <StatsBox title='סה"כ נקודות' text={totalXP} icon="⚡️" />
-        <StatsBox title="זמן" text={committed} icon="⏰" />
-        <StatsBox
-          title={success ? 'מצוין' : 'אולי בפעם הבאה'}
-          text={(heartsReaming / 5) * 100 + '%'}
-          icon="🎯"
-        />
+        {/* Text content */}
+        <Text style={styles.titleText}>
+          {success ? 'כל הכבוד!' : 'נסה שוב!'}
+        </Text>
+        <Text style={styles.subText}>
+          {success
+            ? 'כל שיעור מקרב אותך בדרך להצלת חיים!'
+            : 'הפעם לא הצלחת, נסה שוב בפעם הבאה!'}
+        </Text>
+
+        {/* Stats container */}
+        <View style={styles.statsContainer}>
+          <StatsBox title='סה"כ נקודות' text={totalXP} icon="⚡️" />
+          <StatsBox title="זמן" text={committed} icon="⏰" />
+          <StatsBox
+            title={success ? 'מצוין' : 'אולי בפעם הבאה'}
+            text={(heartsReaming / 5) * 100 + '%'}
+            icon="🎯"
+          />
+        </View>
+
+        {/* Continue button */}
+        <CustomButton title="המשך" handlePress={() => router.push('/(tabs)')} />
       </View>
-
-      {/* Continue button */}
-      <CustomButton title="המשך" handlePress={() => router.push('/(tabs)')} />
-    </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({

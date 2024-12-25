@@ -1,5 +1,3 @@
-
-
 export interface EventProps {
   id: string;
   name: string;
@@ -21,7 +19,7 @@ export interface UserProf {
     hearts : number;
     streak : number; // Date.now
     avatar : string;
-    progress : any;
+    progress : string[];
     xp : number;
     badges : Badge[];
 }

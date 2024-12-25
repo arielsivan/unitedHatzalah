@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
+import Effy from './ui/Effy';
 
 const AppLoading = () => {
   return (
     <View style={styles.loadingContainer}>
+        <Effy feeling='happy'/>
+        <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>טוען...</Text>
       <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );

@@ -1,6 +1,6 @@
 import { useColorAdjust } from '@/hooks/useColorAdjust';
 import React from 'react';
-import { Pressable, StyleSheet, View, Text } from 'react-native';
+import { Pressable, StyleSheet, View, Text,Image } from 'react-native';
 
 interface Props {
   color?: string;
@@ -44,9 +44,16 @@ export function CustomButton({
         onPress={!disabled ? handlePress : undefined}
         disabled={disabled}
       >
+        {title.endsWith('.png') ? (
+            <Image
+              source={{ uri: title }}
+                style={{ width: 40, height: 40 }}
+            />
+        ) : (
         <Text style={[styles.text, { color: adjustColor, fontSize: fontSize }]}>
           {title}
         </Text>
+        )}
       </Pressable>
     </View>
   );

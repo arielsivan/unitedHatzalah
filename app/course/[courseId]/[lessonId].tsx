@@ -32,16 +32,19 @@ export default function LessonScreen() {
   const exercise = lesson.exercises[step] as Exercise;
 
   const handleStepChange = (isCorrect: boolean) => {
-    if (isCorrect) return;
-    setHeartCount((prevHeartCount) => {
-      const newHeartCount = prevHeartCount - 1;
+    if (!isCorrect) {
+      setHeartCount((prevHeartCount) => {
+        const newHeartCount = prevHeartCount - 1;
 
-      if (newHeartCount <= 0) {
-        setEndLesson(true);
-        return 0;
-      }
-      return newHeartCount;
-    });
+        if (newHeartCount <= 0) {
+          setEndLesson(true);
+          return 0;
+        }
+        return newHeartCount;
+      });
+      return;
+    }
+
 
     const newStep = step + 1;
     setProgressPercent(newStep / lesson.exercises.length);
@@ -66,7 +69,7 @@ export default function LessonScreen() {
           />
         </>
       ) : (
-        <FinishScreen heartsReaming={heartCount} />
+        <FinishScreen heartsReaming={heartCount} id={lessonId}/>
       )}
     </View>
   );

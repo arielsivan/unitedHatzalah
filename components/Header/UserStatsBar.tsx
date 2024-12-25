@@ -7,18 +7,26 @@ import { Colors } from '@/constants/Colors';
 import { useAuthStore } from '@/stores/authStore';
 
 interface UserStatsProps {
-  flameCount?: number;
-  diamondCount?: number;
-  heartCount?: number;
+  flameCount: number;
+  diamondCount: number;
+  heartCount: number;
 }
 
-const UserStats: React.FC<UserStatsProps> = () => {
-    const user = useAuthStore(state => state.user);
-  
-    // Get user stats from the user data (or default if not available)
-    const flameCount = user?.streak; // Default streak value if not available
-    const diamondCount = user?.gems; // Default gems value if not available
-    const heartCount = user?.hearts; // Default hearts value if not available
+export default function UserStats({
+  flameCount,
+  diamondCount,
+  heartCount,
+}: UserStatsProps) {
+  const user = useAuthStore((state) => state.user);
+
+  // Get user stats from the user data (or default if not available)
+  flameCount = user?.streak || 0; // Default streak value if not available
+  diamondCount = user?.gems || 0; // Default gems value if not available
+  heartCount = user?.hearts || 0; // Default hearts value if not available
+
+
+  const diffInMs = Date.now() - flameCount;
+  flameCount = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
   return (
     <View style={styles.container}>
@@ -41,7 +49,7 @@ const UserStats: React.FC<UserStatsProps> = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -62,5 +70,3 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
 });
-
-export default UserStats;

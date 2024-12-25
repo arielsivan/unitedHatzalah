@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import mockUsers from '@/mocks/users.json';
 import ScrollToTopContainer from '@/components/ui/ScrollToTopContainer';
 import { UserProf } from '@/types/data';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function Leaderboard() {
-    let users = mockUsers as unknown as UserProf[];
-
+  let users = mockUsers;
 
   const UserLeague = ({ item, index }: { item: UserProf; index: number }) => (
     <View style={styles.itemContainer}>

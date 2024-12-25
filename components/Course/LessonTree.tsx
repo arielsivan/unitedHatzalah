@@ -1,13 +1,29 @@
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView ,Text} from 'react-native';
 import React from 'react';
 import { Course } from '@/types/data';
 import LessonNode from './LessonNode';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function LessonTree({
     lessons,
     id
 } : Course) {
 
+    const user = useAuthStore((state) => state.user);
+
+    const handleDisabled = (lessonId: string, key: number) => {
+        if (!user) return true; // Disable if no user is logged in
+      
+        const isLessonCompleted = user.progress.includes(lessonId);
+      
+        if (key === 0) return false;
+      
+        const previousLesson = lessons[key - 1];
+        const isPreviousLessonCompleted = previousLesson && user.progress.includes(previousLesson.id);
+      
+        return !(isLessonCompleted || isPreviousLessonCompleted);
+      };
+      
     return (
     <ScrollView
       contentContainerStyle={{
@@ -29,7 +45,9 @@ export default function LessonTree({
               marginLeft: snakeMargin,
             }}
           >
-            <LessonNode {...item} courseId={id} />
+            <LessonNode {...item} courseId={id} disabled={
+                handleDisabled(item.id,key)
+            }/>
           </View>
         );
       })}

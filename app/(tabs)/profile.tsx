@@ -4,20 +4,15 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
-  TouchableOpacity,
-  Modal,
-  Pressable,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import { getAuth, deleteUser } from 'firebase/auth';
 
 import { Colors } from '../../constants/Colors';
 import { Badge } from '@/types/data';
 import { useAuthStore } from '@/stores/authStore';
 import { CustomButton } from '@/components/ui/CustomButton';
-import { Redirect, router } from 'expo-router';
+import { router } from 'expo-router';
 import Avatar from '@/components/Profile/Avatar';
 import ModalImageOptions from '@/components/Profile/ModalImageOptions';
 import NoItem from '@/components/NoItem';
@@ -62,13 +57,6 @@ export default function ProfileScreen() {
 
   if (!user) return <NoItem text="אין משתמש " />;
 
-  // Calculate the difference in milliseconds
-  const diffInMs = Date.now() - new Date(user.streak).getTime();
-
-  // Convert milliseconds to days, hours, minutes, etc.
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-  alert('Your streak is ' + diffInDays + ' days.');
-  setStreak(2);
 
   const badges: Badge[] = [
     { id: 1, title: 'שיעור ראשון', icon: 'star-outline' },
@@ -86,20 +74,20 @@ export default function ProfileScreen() {
       <Text style={styles.email}>{user?.email || 'לא מחובר עדיין'}</Text>
 
       {/* Streak, Hearts, and Gems */}
-      <View style={styles.statsContainer}>
+      {/* <View style={styles.statsContainer}>
         <View style={styles.statItem}>
           <Ionicons name="flame-outline" size={24} color={Colors.accent} />
           <Text style={styles.statText}>רצף: {streak}</Text>
         </View>
         <View style={styles.statItem}>
           <Ionicons name="heart-outline" size={24} color={Colors.accent} />
-          <Text style={styles.statText}>לבבות: {user?.hearts || 0}</Text>
+          <Text style={styles.statText}>לבבות: {user?.hearts}</Text>
         </View>
         <View style={styles.statItem}>
           <Ionicons name="cash-outline" size={24} color={Colors.accent} />
-          <Text style={styles.statText}>יהלומים: {user?.gems || 0}</Text>
+          <Text style={styles.statText}>יהלומים: {user?.gems}</Text>
         </View>
-      </View>
+      </View> */}
 
       {/* Modal for Image Options */}
       <ModalImageOptions
@@ -112,7 +100,7 @@ export default function ProfileScreen() {
       <View style={styles.badgesContainer}>
         <Text style={styles.sectionTitle}> ההישגים שלי: </Text>
         <View style={styles.badgesList}>
-          {(user?.badges || []).map((badge) => (
+          {(badges).map((badge) => (
             <View key={badge.id} style={styles.badgeItem}>
               <Ionicons
                 name={badge.icon as any}

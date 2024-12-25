@@ -19,7 +19,7 @@ export default function TabLayout() {
 
   return (
     <>
-      {isAuthenticated ? <UserStats /> : null}
+      {isAuthenticated ? <UserStats flameCount={0} diamondCount={0} heartCount={0} /> : null}
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -85,7 +85,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: 'ראשי',
+            title: 'למידה',
             tabBarIcon: ({ color }) => (
               <Ionicons name="home" size={24} color={color} />
             ),
