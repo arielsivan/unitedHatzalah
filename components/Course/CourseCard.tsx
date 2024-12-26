@@ -1,12 +1,23 @@
+import { useArrayStore } from '@/stores/arrStore';
 import { Course } from '@/types/data';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 
 export default function CourseCard({ id, title, description, image } : Course) {
+    const router = useRouter();
+    const addItem = useArrayStore((state) => state.addItem);
+    const handlePress = () => {
+        if(id == 'F4wA3R7V0dIzb7ya2NJ4') addItem('Fire')
+        else addItem('CPR');
+        router.push(`/course/${id}`)
+    }
+    
     return (
-        <TouchableOpacity style={styles.card} onPress={() => router.replace(`/course/${id}`)}>
+
+
+        <TouchableOpacity style={styles.card} onPress={handlePress}>
             {/* Course Image */}
             <Image source={{ uri: image }} style={styles.image} />
 

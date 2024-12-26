@@ -2,6 +2,7 @@ import AppError from '@/components/AppError';
 import AppLoading from '@/components/AppLoading';
 import LessonTree from '@/components/Course/LessonTree';
 import NoItem from '@/components/NoItem';
+import BackArrow from '@/components/ui/BackArrow';
 import useCourseStore from '@/stores/courseStore';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect } from 'react';
@@ -25,6 +26,7 @@ const CourseDetails = () => {
 
   return (
     <View style={styles.container}>
+        <BackArrow />
       <Text style={styles.title}>{course.title}</Text>
       <LessonTree {...course} />
     </View>

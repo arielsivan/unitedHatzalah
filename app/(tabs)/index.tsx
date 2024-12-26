@@ -24,7 +24,7 @@ export default function Learning() {
   return (
     <ScrollToTopContainer>
       {courses.map((course) => (
-        <CourseCard {...course} key={course.id} />
+        course.id !== "RyptAMiZquWHcghAmgOW" ? <CourseCard {...course} key={course.id} /> : null
       ))}
     </ScrollToTopContainer>
   );

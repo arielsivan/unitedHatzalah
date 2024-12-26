@@ -6,13 +6,14 @@ import AppLoading from '@/components/AppLoading';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/configs/FirebaseConfig';
 import Call from '@/components/Call';
+import { useArrayStore } from '@/stores/arrStore';
 
 export default function RootLayout() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [callId, setCallId] = useState('');
   let user = useAuthStore((state) => state.user);
-
+    const Items = useArrayStore((state) => state.items);
   useEffect(() => {
     if (!user) return; // Ensure user is defined before setting up the listener
   

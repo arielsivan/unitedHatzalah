@@ -7,11 +7,11 @@ import { useAuthStore } from '@/stores/authStore';
 export default function LessonTree({ lessons, id }: Course) {
   const user = useAuthStore((state) => state.user);
 
-  const handleDisabled = (lessonId: string, key: number) => {
+  const handleDisabled = (lessonId: string, key: number, lessons: Course['lessons']) => {
     if (!user) return true; // Disable if no user is logged in
 
     const isLessonCompleted = user.progress.includes(lessonId);
-
+    
     if (key === 0) return false;
 
     const previousLesson = lessons[key - 1];
@@ -40,7 +40,7 @@ export default function LessonTree({ lessons, id }: Course) {
             <LessonNode
               {...item}
               courseId={id}
-              disabled={handleDisabled(item.id, key)}
+              disabled={handleDisabled(item.id, key, lessons)}
             />
           </View>
         );

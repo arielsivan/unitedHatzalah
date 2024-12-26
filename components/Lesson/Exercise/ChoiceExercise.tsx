@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, Modal, Pressable, Alert } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Modal,
+  Pressable,
+  Alert,
+} from 'react-native';
 import { Exercise } from '@/types/data';
 import PressableOption from './PressableOption';
 import AnswerIndex from './AnswerIndex';
@@ -13,7 +21,7 @@ export default function ChoiceExercise({
   exercise,
   onAnswerSelected,
 }: ChoiceExerciseProps) {
-  const { question, answers, correct,subQuestion } = exercise;
+  const { question, answers, correct, subQuestion } = exercise;
   const [modalVisible, setModalVisible] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState('');
 
@@ -51,11 +59,11 @@ export default function ChoiceExercise({
             textAlign: 'center',
             fontSize: 24,
             marginBottom: 20,
-          }
-        }>
-            {subQuestion}
+          }}
+        >
+          {subQuestion}
         </Text>
-        )}
+      )}
 
       <View style={styles.answersContainer}>
         {answers.map((answer, index) =>
@@ -77,13 +85,16 @@ export default function ChoiceExercise({
               index={index}
               handleAnswerPress={handleAnswerPress}
             >
-                {answer.endsWith('.png') || answer.endsWith('.jpg') ? (
-                    <Image source={{ uri: answer }} style={{ width: 100, height: 100 }} />
-                ) : (
-                    <Text style={{ fontSize: 50 }}>{answer}</Text>
-                )}
+              {answer.endsWith('.png') || answer.endsWith('.jpg') ? (
+                <Image
+                  source={{ uri: answer }}
+                  style={{ width: 100, height: 100 }}
+                />
+              ) : (
+                <Text style={{ fontSize: 50 }}>{answer}</Text>
+              )}
             </PressableOption>
-          )
+          ),
         )}
       </View>
 
@@ -98,7 +109,14 @@ export default function ChoiceExercise({
           <View style={styles.modalContainer}>
             <Text style={styles.modalText}>אופס טעות😮</Text>
             <Text style={styles.modalText}>התשובה הנכונה היא:</Text>
-            <Text style={styles.correctAnswer}>{correctAnswer}</Text>
+            {exercise.type.endsWith('text') ? (
+              <Text style={styles.correctAnswer}>{correctAnswer}</Text>
+            ) : (
+              <Image
+                source={{ uri: correctAnswer}}
+                style={styles.robotImage}
+              />
+            )}
             <Pressable
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
@@ -148,6 +166,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#2196F3',
     marginBottom: 20,
+  },
+  robotImage: {
+    marginBottom: 20,
+    width: 100,
+    height: 100,
   },
   closeButton: {
     backgroundColor: '#2196F3',
