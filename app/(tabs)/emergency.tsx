@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   TextInput,
+  ImageBackground,
 } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import EmergencyCard from '@/components/Emergency/EmergencyCard';
@@ -153,64 +154,79 @@ const EmergencyScreen: React.FC = () => {
   }, [searchQuery]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Search emergency..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        accessibilityLabel="Search emergency types"
-        returnKeyType="search"
-      />
-
-      {noResults && (
-        <Text style={styles.noResultsText}>No matching emergencies found.</Text>
-      )}
-
-      <View style={styles.topButtonsContainer}>
-        {filterButtons(topButtons).map((button) => (
-          <TouchableOpacity
-            key={button.id}
-            style={styles.topButton}
-            onPress={() => handleButtonPress(button.id)}
-            accessibilityLabel={`Emergency option: ${button.title}`}
-          >
-            <Text style={styles.topButtonText}>{button.title}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      <View style={styles.bottomButtonsContainer}>
-        {filterButtons(bottomButtons).map((button) => (
-          <TouchableOpacity
-            key={button.id}
-            style={styles.bottomButton}
-            onPress={() => handleButtonPress(button.id)}
-            accessibilityLabel={`Emergency option: ${button.title}`}
-          >
-            <Text style={styles.bottomButtonText}>{button.title}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {selectedEmergency && (
-        <EmergencyCard
-          header={selectedEmergency.header}
-          steps={selectedEmergency.steps}
-          onClose={handleCloseCard}
+    <ImageBackground
+      source={require('@/assets/SOSbg.jpg')} // עדכן את הנתיב לפי המיקום המדויק
+      style={styles.background}
+    >
+      <View style={styles.overlay} />
+      <ScrollView contentContainerStyle={styles.container}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search emergency..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          accessibilityLabel="Search emergency types"
+          returnKeyType="search"
         />
-      )}
-    </ScrollView>
+
+        {noResults && (
+          <Text style={styles.noResultsText}>
+            No matching emergencies found.
+          </Text>
+        )}
+
+        <View style={styles.topButtonsContainer}>
+          {filterButtons(topButtons).map((button) => (
+            <TouchableOpacity
+              key={button.id}
+              style={styles.topButton}
+              onPress={() => handleButtonPress(button.id)}
+              accessibilityLabel={`Emergency option: ${button.title}`}
+            >
+              <Text style={styles.topButtonText}>{button.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <View style={styles.bottomButtonsContainer}>
+          {filterButtons(bottomButtons).map((button) => (
+            <TouchableOpacity
+              key={button.id}
+              style={styles.bottomButton}
+              onPress={() => handleButtonPress(button.id)}
+              accessibilityLabel={`Emergency option: ${button.title}`}
+            >
+              <Text style={styles.bottomButtonText}>{button.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {selectedEmergency && (
+          <EmergencyCard
+            header={selectedEmergency.header}
+            steps={selectedEmergency.steps}
+            onClose={handleCloseCard}
+          />
+        )}
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
 export default EmergencyScreen;
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover', // מתאים את התמונה למסך
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject, // ממלא את כל המסך
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', // צבע לבן עם שקיפות של 30%
+  },
   container: {
     padding: 20,
     paddingBottom: 40,
-    backgroundColor: '#f0f0f0',
     flexGrow: 1,
   },
   searchBar: {
