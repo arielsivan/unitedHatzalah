@@ -247,6 +247,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       return;
     }
   
+    if(currentUser.progress?.includes(lessonId)) return;
+
     const userId = auth.currentUser?.uid;
     if (!userId) {
       console.error('User ID not found. Is the user authenticated?');
@@ -259,6 +261,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   
       const userRef = doc(db, 'users', userId);
       await setDoc(userRef, {
+        gems : currentUser.gems + 50,
         progress: [...(currentUser.progress || []), lessonId],
       }, { merge: true });
   
@@ -267,6 +270,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         user: {
           ...currentUser,
           progress: [...(currentUser.progress || []), lessonId],
+          gems : currentUser.gems + 50,
         },
       });
   
