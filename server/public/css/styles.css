@@ -1,25 +1,87 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
   text-align: center;
+  background: linear-gradient(to right, #cc5522, #ff9977);
+  height: 100vh;
   margin: 0;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-h1 {
-  color: #4caf50;
+.form-container, .success-container {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-button {
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container h2,
+.form-container button,
+.form-container select {
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.button {
+  background: #87ceeb;
+  border: none;
+  color: black;
   padding: 10px 20px;
-  background-color: #4caf50;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.create-button {
+  background: #ff4d4d;
   color: white;
+  border-radius: 5px;
+  font-size: 2rem;
+}
+
+.success-button {
+  background: #28a745;
+  color: white;
+  font-size: 1.5rem;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.dropdown {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  background: #87ceeb;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  appearance: none; /* Remove default dropdown arrow */
+  -webkit-appearance: none; /* Remove default dropdown arrow in Safari */
+  -moz-appearance: none; /* Remove default dropdown arrow in Firefox */
+  text-align-last: center; /* Center the text */
 }
 
-button:hover {
-  background-color: #45a049;
+.dropdown::after {
+  content: '▼'; /* Add a custom arrow */
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
 }
