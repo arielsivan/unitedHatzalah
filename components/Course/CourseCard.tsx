@@ -59,10 +59,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#2c3e50',
         marginBottom: 10,
+        textAlign: 'right'
     },
     description: {
         fontSize: 16,
         color: '#7f8c8d',
         lineHeight: 22,
+        textAlign: 'right'
+        // writingDirection: 'rtl',
     },
 });
