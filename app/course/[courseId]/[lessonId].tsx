@@ -45,7 +45,6 @@ export default function LessonScreen() {
       return;
     }
 
-
     const newStep = step + 1;
     setProgressPercent(newStep / lesson.exercises.length);
 
@@ -54,7 +53,10 @@ export default function LessonScreen() {
         setEndLesson(true);
       }, 1000);
     } else {
-      setStep(newStep);
+      setTimeout(() => {
+        setStep(newStep);
+        // setEndLesson(true);
+      }, 1000);
     }
   };
 
@@ -69,7 +71,7 @@ export default function LessonScreen() {
           />
         </>
       ) : (
-        <FinishScreen heartsReaming={heartCount} id={lessonId}/>
+        <FinishScreen heartsReaming={heartCount} id={lessonId} />
       )}
     </View>
   );
