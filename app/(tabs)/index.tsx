@@ -14,6 +14,7 @@ export default function Learning() {
   useEffect(() => {
     // Fetch the course when the component mounts
     fetchAllCourses();
+    
   }, [fetchAllCourses]);
 
   if (loading) return <AppLoading />;

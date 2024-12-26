@@ -24,7 +24,7 @@ createButton.addEventListener('click', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ skill, location })
+            body: JSON.stringify({ skill })
         })
         .then(response => response.json())
         .then(data => {
