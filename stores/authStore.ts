@@ -81,7 +81,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       await useAuthStore.getState().fetchUserData(user.uid);
     } catch (error: any) {
-      console.error('Login failed:', error);
+    //   console.error('Login failed:', error);
     
       // in case the user credentials are incorrect, the error message will be displayed
       const userCredential = await signInWithEmailAndPassword(

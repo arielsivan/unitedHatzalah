@@ -6,6 +6,7 @@ import useCourseStore from "@/stores/courseStore"; // Import your Zustand store
 import AppLoading from "@/components/AppLoading";
 import AppError from "@/components/AppError";
 import NoItem from "@/components/NoItem";
+import Call from "@/components/Call";
 
 export default function Learning() {
   const courseId = "syXFUZcIneOmqaqGLBsA"; // ID of the course to fetch
@@ -23,6 +24,7 @@ export default function Learning() {
   return (
     <ScrollToTopContainer>
       <LessonTree {...course} />
+      
     </ScrollToTopContainer>
   );
 }
