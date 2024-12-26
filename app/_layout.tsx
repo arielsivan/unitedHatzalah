@@ -1,43 +1,53 @@
+import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import 'react-native-reanimated';
 import { useAuthStore } from '@/stores/authStore';
 import AppLoading from '@/components/AppLoading';
-import React, { useEffect } from 'react';
-import { Alert, Platform, ToastAndroid } from 'react-native';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/configs/FirebaseConfig';
-
-const listenForCPRCalls = () => {
-  const callsRef = collection(db, 'calls');
-  const cprCallsQuery = query(callsRef, where('type', '==', 'CPR Help'));
-
-  const unsubscribe = onSnapshot(cprCallsQuery, (snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-      if (change.type === 'added') {
-        const newCall = change.doc.data();
-        console.log('New CPR Help call:', newCall);
-
-        const message = `CPR Help Call!\nLocation: ${newCall.location}\nPatient: ${newCall.patientName}\nContact: ${newCall.contactNumber}`;
-
-        // Show a popup
-        if (Platform.OS === 'android') {
-          ToastAndroid.show(message, ToastAndroid.LONG);
-        } else {
-          Alert.alert('Emergency!', message);
-        }
-      }
-    });
-  });
-
-  return unsubscribe; // Return unsubscribe to stop listening when needed
-};
+import Call from '@/components/Call';
 
 export default function RootLayout() {
-  useEffect(() => {
-    const unsubscribe = listenForCPRCalls();
-    return () => unsubscribe(); // Clean up listener on unmount
-  }, []);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [callId, setCallId] = useState('');
+  let user = useAuthStore((state) => state.user);
 
+  useEffect(() => {
+    if (!user) return; // Ensure user is defined before setting up the listener
+  
+    const callsRef = collection(db, 'calls');
+  
+    const unsubscribe = onSnapshot(callsRef, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          const newCall = change.doc.data();
+          console.log('New call:', newCall);
+  
+        const hasBadge = (user.badges || []).some((badge) => badge.title  === newCall.skill);
+        if (!hasBadge) return;
+
+          // Set modal message and callId
+          const message = `קריאה חדשה לעזרה ${newCall.skill || ''} במיקום: ${newCall.location || 'לא ידוע'}`;
+          setModalMessage(message);
+  
+          const callIdMap : any = {
+            Fire: '1',
+            CPR: '11',
+            Snakes: '4',
+            Stroke: '2',
+          };
+          setCallId(callIdMap[newCall.skill] || ''); // Fallback to an empty string if skill is unknown
+  
+          // Show the modal
+          setModalVisible(true);
+        }
+      });
+    });
+  
+    return () => unsubscribe(); // Clean up listener on unmount
+  }, [user]); // Add 'user' to dependency array
+  
   const loading = useAuthStore((state) => state.loading);
 
   if (loading) {
@@ -50,6 +60,9 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>
+
+      {/* Render the Call modal */}
+      <Call visible={modalVisible} setVisible={setModalVisible} message={modalMessage} id={callId} />
     </>
   );
 }

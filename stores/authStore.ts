@@ -6,7 +6,7 @@ import {
 import { auth, db } from '@/configs/FirebaseConfig';
 import { doc, setDoc, getDoc, getDocs, collection, arrayUnion, updateDoc } from 'firebase/firestore';
 import { Platform, ToastAndroid ,Alert } from 'react-native';
-import { UserProf } from '@/types/data';
+import { Badge, UserProf } from '@/types/data';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -190,10 +190,31 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const docRef = doc(db, 'users', userId);
       const docSnap = await getDoc(docRef);
-
+  
       if (docSnap.exists()) {
         const userData = docSnap.data() as UserProf;
-        set({ user: userData, loading: false }); // Set loading to false after fetching user data
+  
+        // Safely handle badges
+        let badgeDetails  : any[] = [];
+        if (Array.isArray(userData.badges) && userData.badges.length > 0) {
+          const validBadgeIds = userData.badges.filter((id) => typeof id === 'string'); // Ensure badge IDs are strings
+          const badgeRefs = validBadgeIds.map((badgeId) =>
+            getDoc(doc(db, 'badges', badgeId))
+          );
+  
+          const badgeSnapshots = await Promise.all(badgeRefs);
+          badgeDetails = badgeSnapshots
+            .filter((snapshot) => snapshot.exists())
+            .map((snapshot) => ({ id: snapshot.id, ...snapshot.data() }));
+        }
+  
+        // Merge badge details with user data
+        const userWithBadges = {
+          ...userData,
+          badges: badgeDetails,
+        };
+  
+        set({ user: userWithBadges, loading: false }); // Set loading to false after fetching user data
       } else {
         console.log('No such document!');
         set({ user: null, loading: false }); // Set loading to false if no user data is found
@@ -203,6 +224,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user: null, loading: false }); // Set loading to false in case of error
     }
   },
+  
+
 
   updateAvatar: async (avatar: string) => {
     const currentUser = useAuthStore.getState().user;

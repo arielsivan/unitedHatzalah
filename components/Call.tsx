@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -15,29 +15,26 @@ import Effy from './ui/Effy';
 interface CallProps {
   visible: boolean;
   message?: string;
-  id ?: string;
-};
+  id?: string;
+  setVisible: (message: boolean) => void;
+}
 
 const { width } = Dimensions.get('window');
 
 export default function Call({
   visible,
   message = 'יש אירוע חירום במיקומך',
-  id = '11'
+  id = '11',
+  setVisible,
 }: CallProps) {
   const router = useRouter();
-  const [myVisibility, setVisibility] = useState(visible);
-
-  useEffect(() => {
-    setVisibility(visible);
-  }, [visible]);
 
   return (
     <Modal
       animationType="fade"
       transparent={true}
-      visible={myVisibility}
-      onRequestClose={() => setVisibility(false)}
+      visible={visible}
+      onRequestClose={() => {setVisible(false)}}
     >
       <View style={styles.overlay}>
         <Animatable.View
@@ -51,7 +48,7 @@ export default function Call({
           >
             <Effy feeling="worried" />
             <Text style={styles.message}>
-                {message}
+              {message}
             </Text>
             <View style={styles.buttonContainer}>
               <Animatable.View
@@ -66,9 +63,8 @@ export default function Call({
                   onPress={() => {
                     router.push({
                       pathname: '/emergency',
-                      params: { id: id },
+                      params: { id },
                     });
-                    setVisibility(false);
                   }}
                 >
                   <Text style={styles.buttonText}>קבל</Text>
@@ -76,7 +72,7 @@ export default function Call({
               </Animatable.View>
               <TouchableOpacity
                 style={styles.declineButton}
-                onPress={() => setVisibility(false)}
+                onPress={() => {setVisible(false)}}
               >
                 <Text style={styles.buttonText}>דחה</Text>
               </TouchableOpacity>

@@ -103,6 +103,7 @@ input {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
+  direction: rtl;
   text-align: right;
 }
 

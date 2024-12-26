@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, deleteUser } from 'firebase/auth';
@@ -100,14 +101,15 @@ export default function ProfileScreen() {
       <View style={styles.badgesContainer}>
         <Text style={styles.sectionTitle}> ההישגים שלי: </Text>
         <View style={styles.badgesList}>
-          {(badges).map((badge) => (
+          {(user.badges).map((badge) => (
             <View key={badge.id} style={styles.badgeItem}>
-              <Ionicons
+              {/* <Ionicons
                 name={badge.icon as any}
                 size={48}
                 color={Colors.accent}
                 style={styles.badgeIcon}
-              />
+              /> */}
+              <Image source={{ uri: badge.icon }} style={styles.badgeIcon} />
               <Text style={styles.badgeTitle}>{badge.title}</Text>
             </View>
           ))}
@@ -189,6 +191,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: '#f0f0f0',
     padding: 15,
+    width: 100,
+    height: 100,
   },
   badgeTitle: {
     marginTop: 5,
