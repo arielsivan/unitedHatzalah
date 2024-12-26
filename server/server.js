@@ -1,6 +1,24 @@
 const express = require('express');
 const path = require('path');
+const admin = require('firebase-admin');
+const { log } = require('console');
+
 const app = express();
+
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
+// Load the service account key
+const serviceAccount = require('./serviceAccount.json');
+
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://united-db8c8.firebaseio.com", // Replace with your actual database URL
+});
+
+// Initialize Firestore after Firebase Admin is initialized
+const db = admin.firestore();
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -10,35 +28,27 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.use(bodyParser.json());
-
-// Route to handle '/create-reading' POST requests
-app.post('/create-reading', (req, res) => {
-    const { skill, location } = req.body;
-
-    if (!skill || !location) {
-        // Return an error if skill or location is missing
-        return res.status(400).json({ success: false, message: 'Skill and location are required' });
-    }
-
-    console.log('Received skill:', skill);
-    console.log('Received location:', location);
-
-    // Simulate creating a "reading" or performing some action
-    // Replace the following with your actual logic (e.g., database operation)
-    const readingId = Math.floor(Math.random() * 10000); // Example reading ID
-
-    console.log(`Created reading with ID: ${readingId}`);
-
-    // Send success response
-    res.status(200).json({
-        success: true,
-        message: 'Reading created successfully',
-        data: { skill, location, readingId },
-    });
+app.get('/calls', async (req, res) => {
+  try {
+    const newCall = { skill: 'CPR', location: 'Jerusalem' };
+    const docRef = await db.collection('calls').add(newCall);
+    res.status(201).send(`User added with ID: ${docRef.id}`);
+  } catch (error) {
+    res.status(500).send('Error adding user: ' + error.message);
+  }
 });
 
-
+app.post('/calls', async (req, res) => {
+  log(req.body);
+  try {
+    const { skill, location } = req.body;
+    const newCall = { skill, location };
+    const docRef = await db.collection('calls').add(newCall);
+    res.status(201).send(`User added with ID: ${docRef.id}`);
+  } catch (error) {
+    res.status(500).send('Error adding user: ' + error.message);
+  }
+});
 
 // Start the server
 const PORT = 3000;

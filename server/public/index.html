@@ -9,14 +9,15 @@
 <body>
     <div class="form-container" id="form-container">
         <h2>קובץ קריאה חדשה</h2>
-        <select class="button dropdown" id="skill-dropdown" title="בחר מיומנות">
-            <option value="" disabled selected hidden>תבחר מיומנות</option>
-            <option value="Skill1">פגיעות לב</option>
-            <option value="Skill2">פגיעות ראש</option>
-            <option value="Skill3">דימום</option>
+        <select class="dropdown" id="skill-dropdown" title="בחר מיומנות">
+            <option value="" disabled selected hidden>בחר מיומנות</option>
+            <option value="CPR">אדם נחנק</option>
+            <option value="Fire">אש</option>
+            <option value="Snakes">הכשת נחש</option>
+            <option value="Stroke">שבץ</option>
         </select>
-        <input type="text" class="button" id="location-search" placeholder="הכנס כתובת מדויקת">
-        <button class="create-button" id="create-button">צור קריאה</button>
+        <input type="text" id="location-search" placeholder="הכנס כתובת מדויקת">
+        <button class="create-button button" id="create-button">צור קריאה</button>
     </div>
     <div class="success-container hidden" id="success-container">
         <p>הקריאה נוצרה בהצלחה</p>

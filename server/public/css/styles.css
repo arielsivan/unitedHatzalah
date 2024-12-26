@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background: linear-gradient(to right, #cc5522, #ff9977);
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
   height: 100vh;
   margin: 0;
   display: flex;
@@ -9,24 +9,31 @@ body {
   justify-content: center;
 }
 
-.form-container, .success-container {
+.form-container,
+.success-container {
   background: white;
   border-radius: 15px;
-  padding: 20px;
-  width: 300px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 30px 20px;
+  width: 350px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.form-container h2,
-.form-container button,
-.form-container select {
-  margin-bottom: 10px;
+.form-container h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
 }
 
 .hidden {
@@ -34,54 +41,72 @@ body {
 }
 
 .button {
-  background: #87ceeb;
+  background: #4caf50;
   border: none;
-  color: black;
-  padding: 10px 20px;
+  color: white;
+  padding: 12px 20px;
   margin: 10px 0;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background: #45a049;
 }
 
 .create-button {
   background: #ff4d4d;
   color: white;
-  border-radius: 5px;
-  font-size: 2rem;
+  font-size: 1.2rem;
 }
 
-.success-button {
-  background: #28a745;
-  color: white;
-  font-size: 1.5rem;
-  padding: 15px;
-  border-radius: 5px;
-}
-
-.button:hover {
-  opacity: 0.9;
+.create-button:hover {
+  background: #e03e3e;
 }
 
 .dropdown {
-  margin-top: 10px;
   padding: 10px;
   font-size: 16px;
   width: 100%;
-  background: #87ceeb;
-  color: black;
-  border: none;
+  background: #f1f1f1;
+  color: #333;
+  border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
-  appearance: none; /* Remove default dropdown arrow */
-  -webkit-appearance: none; /* Remove default dropdown arrow in Safari */
-  -moz-appearance: none; /* Remove default dropdown arrow in Firefox */
   text-align-last: center; /* Center the text */
 }
 
-.dropdown::after {
-  content: '▼'; /* Add a custom arrow */
-  position: absolute;
-  right: 10px;
-  pointer-events: none;
+.dropdown:focus {
+  border-color: #4caf50;
+}
+
+.success-container p {
+  font-size: 1.2rem;
+  color: #4caf50;
+  margin-bottom: 20px;
+}
+
+.success-container .button {
+  background: #4caf50;
+}
+
+.success-container .button:hover {
+  background: #45a049;
+}
+
+input {
+  padding: 10px;
+  width: calc(100% - 20px);
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: right;
+}
+
+input:focus {
+  border-color: #4caf50;
+  outline: none;
 }
