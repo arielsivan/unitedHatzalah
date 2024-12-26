@@ -7,6 +7,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import EmergencyCard from '@/components/Emergency/EmergencyCard';
 import { emergencyData, EmergencyInfo } from '@/mocks/emergencyData'; // Adjust the import path as needed
 
@@ -31,6 +32,8 @@ const emergencySynonyms: { [key: string]: string[] } = {
   החייאה: [
     'cardiopulmonary resuscitation',
     'cpr',
+    'heart attack',
+    'heart',
     'התקף',
     'התקפת לב',
     'התקף לב',
@@ -68,6 +71,23 @@ const EmergencyScreen: React.FC = () => {
     useState<EmergencyInfo | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [noResults, setNoResults] = useState<boolean>(false);
+  const params = useLocalSearchParams();
+  const { id } = params as { id?: string };
+
+  React.useEffect(() => {
+    if (id) {
+      const emergencyInfo = emergencyData[parseInt(id, 10)];
+      if (emergencyInfo) {
+        setSelectedEmergency(emergencyInfo);
+      } else {
+        setSelectedEmergency({
+          id: parseInt(id, 10),
+          header: 'Emergency Not Found',
+          steps: ['No information available for this emergency type.'],
+        });
+      }
+    }
+  }, [id]);
 
   const handleButtonPress = (id: number) => {
     const emergencyInfo = emergencyData[id];
@@ -93,8 +113,8 @@ const EmergencyScreen: React.FC = () => {
 
     for (const [title, synonyms] of Object.entries(emergencySynonyms)) {
       if (synonyms.includes(lowerQuery)) {
-        const foundEntry = Object.values(emergencyData).find(
-          (info) => info.header.toLowerCase().includes(title.toLowerCase())
+        const foundEntry = Object.values(emergencyData).find((info) =>
+          info.header.toLowerCase().includes(title.toLowerCase()),
         );
         if (foundEntry) {
           matchedIds.push(foundEntry.id);
@@ -117,7 +137,7 @@ const EmergencyScreen: React.FC = () => {
     return buttons.filter(
       (button) =>
         button.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        matchedIds.includes(button.id)
+        matchedIds.includes(button.id),
     );
   };
 
@@ -134,7 +154,6 @@ const EmergencyScreen: React.FC = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Search Bar */}
       <TextInput
         style={styles.searchBar}
         placeholder="Search emergency..."
@@ -144,12 +163,10 @@ const EmergencyScreen: React.FC = () => {
         returnKeyType="search"
       />
 
-      {/* No Results Message */}
       {noResults && (
         <Text style={styles.noResultsText}>No matching emergencies found.</Text>
       )}
 
-      {/* Top Buttons */}
       <View style={styles.topButtonsContainer}>
         {filterButtons(topButtons).map((button) => (
           <TouchableOpacity
@@ -163,7 +180,6 @@ const EmergencyScreen: React.FC = () => {
         ))}
       </View>
 
-      {/* Bottom Buttons */}
       <View style={styles.bottomButtonsContainer}>
         {filterButtons(bottomButtons).map((button) => (
           <TouchableOpacity
@@ -177,7 +193,6 @@ const EmergencyScreen: React.FC = () => {
         ))}
       </View>
 
-      {/* Display EmergencyCard if an emergency is selected */}
       {selectedEmergency && (
         <EmergencyCard
           header={selectedEmergency.header}
