@@ -1,61 +1,83 @@
 export default MockCards = [
-    {
-      id: 1,
-      title: 'שאלה 1 לדוגמה דיון פתוח בנושא כלשהו ולא יודע מה עוד כדאי להוסיף כאן כדי שיהיה יותר מעניין',
-      messages: [
-        { id: '1', sender: 'UserA', message: 'Hello1!' },
-        { id: '2', sender: 'UserB', message: 'Hi there!' },
-        { id: '3', sender: 'UserA', message: 'Hello1!' },
-        { id: '4', sender: 'UserB', message: 'Hi there!' },
-        { id: '5', sender: 'UserA', message: 'Hello1!' },
-        { id: '6', sender: 'UserB', message: 'Hi there!' },
-        { id: '7', sender: 'UserA', message: 'Hello1!' },
-        { id: '8', sender: 'UserB', message: 'Hi there!' },
-        { id: '9', sender: 'UserA', message: 'Hello1!' },
-        { id: '10', sender: 'UserB', message: 'Hi there!' },
-        { id: '11', sender: 'UserA', message: 'Hello1!' },
-        { id: '12', sender: 'UserB', message: 'Hi there!' },
-        { id: '13', sender: 'UserA', message: 'Hello1!' },
-        { id: '14', sender: 'UserB', message: 'Hi there!' },
-        { id: '15', sender: 'UserA', message: 'Hello1!' },
-        { id: '16', sender: 'UserB', message: 'Hi there!' },
-        { id: '17', sender: 'UserA', message: 'Hello1!' },
-        { id: '18', sender: 'UserB', message: 'Hi there!' },
-        
-      ],
-    },
-    {
-      id: 2,
-      title: 'שאלה 2ניין',
-      messages: [
-        { id: '1', sender: 'UserA', message: 'Hello!2' },
-        { id: '2', sender: 'UserB', message: 'Hi there!' },
-      ],
-
-    },
-    {
-      id: 3,
-      title: 'שאלה 3 לדוגמה דיון פתוח בנושא כלשהו ולא יודע מה עוד כדי להוסיף כאן כדי שיהיה יותר מעניין',
-      messages: [
-        { id: '1', sender: 'UserA', message: 'Hello!3' },
-        { id: '2', sender: 'UserB', message: 'Hi there!' },
-      ],
-    },
-
-    {
-      id: 4,
-      title: 'שאלה 4 לדוגמה דיון פתוח בנושא כלשהו ולא יודע מה עוד כדי להוסיף כאן כדי שיהיה יותר מעניין',
-      messages: [
-        { id: '1', sender: 'UserA', message: 'Hello!4' },
-        { id: '2', sender: 'UserB', message: 'Hi there!' },
-      ],
-    },
-    {
-      id: 5,
-      title: 'שאלה 5 לדוגמה דיון פתוח בנושא כלשהו ולא יודע מה עוד כדי להוסיף כאן כדי שיהיה יותר מעניין',
-      messages: [
-        { id: '1', sender: 'UserA', message: 'Hello!5' },
-        { id: '2', sender: 'UserB', message: 'Hi there!' },
-      ],
-    }
-  ];
+  {
+    id: 1,
+    title: 'פרויקט קהילתי לשיפור המודעות להחייאה',
+    messages: [
+      { id: '1', sender: 'דנה', message: 'איך אפשר להעלות מודעות להחייאה בקהילה?' },
+      { id: '2', sender: 'יוסי', message: 'אולי ניצור סדנה פתוחה במרכז הקהילתי.' },
+      { id: '3', sender: 'נועה', message: 'רעיון מצוין, אפשר גם לחלק פליירים עם שלבים להחייאה.' },
+      { id: '4', sender: 'דנה', message: 'נשמע טוב! אני יכול לעזור בארגון.' },
+      { id: '5', sender: 'רועי', message: 'יש לי קשר למרכזים קהילתיים, אני יכול לעזור בתיאום.' },
+      { id: '6', sender: 'מיכל', message: 'רעיון מעניין, אפשר לצרף גם מתנדבים ממד"א.' },
+      { id: '7', sender: 'יוסי', message: 'מסכים, צריך לבדוק כמה תקציב נדרש לזה.' },
+      { id: '8', sender: 'דנה', message: 'נתחיל בקטן ונראה איך זה מתפתח.' },
+      { id: '9', sender: 'נועה', message: 'אני יכול להכין מצגת בסיסית להדרכה.' },
+      { id: '10', sender: 'יוסי', message: 'מצוין, נשב ביחד ונתכנן את הכל.' },
+      { id: '11', sender: 'מיכל', message: 'מי רוצה לקחת אחריות על הזמנות?' },
+      { id: '12', sender: 'רועי', message: 'אני אטפל בזה, יש לי כבר כמה רעיונות.' },
+      { id: '13', sender: 'דנה', message: 'מעולה! בואו נקבע פגישה לסיכום הפרטים.' },
+    ],
+  },
+  {
+    id: 2,
+    title: 'למידה אינטראקטיבית באפליקציה',
+    messages: [
+      { id: '1', sender: 'עדי', message: 'מה דעתכם על הוספת משחקים אינטראקטיביים ללמידה?' },
+      { id: '2', sender: 'יונתן', message: 'רעיון מעולה, זה יהפוך את הלמידה למהנה יותר.' },
+      { id: '3', sender: 'רחל', message: 'נוכל לשלב שאלות עם תמונות ואנימציות.' },
+      { id: '4', sender: 'עדי', message: 'נבדוק איך להוסיף את זה לעדכון הבא.' },
+      { id: '5', sender: 'שירה', message: 'משחק עם ניקוד יגרום למשתמשים לחזור שוב ושוב.' },
+      { id: '6', sender: 'יונתן', message: 'אפשר גם לעשות תחרויות קבוצתיות.' },
+    ],
+  },
+  {
+    id: 3,
+    title: 'חוויות מהשטח: הצלת חיים',
+    messages: [
+      { id: '1', sender: 'אייל', message: 'לא מזמן השתמשתי בידע בהחייאה כדי להציל חיים!' },
+      { id: '2', sender: 'מאיה', message: 'וואו, ספר לנו מה קרה.' },
+      { id: '3', sender: 'אייל', message: 'מצאתי אדם שהתמוטט ברחוב, פעלתי לפי ההנחיות ולמזלי הוא התעורר.' },
+      { id: '4', sender: 'אלון', message: 'מרגש מאוד, זו דוגמה לחשיבות של הלמידה שלנו.' },
+      { id: '5', sender: 'מאיה', message: 'גם אני עברתי חוויה דומה. זו תחושת סיפוק מדהימה.' },
+      { id: '6', sender: 'אלון', message: 'חשוב לשתף סיפורים כאלה כדי לעודד אחרים ללמוד.' },
+    ],
+  },
+  {
+    id: 4,
+    title: 'שיתוף חומרים ללמידה',
+    messages: [
+      { id: '1', sender: 'ענבל', message: 'אני מחפשת סרטוני וידאו טובים על החייאה, יש לכם המלצות?' },
+      { id: '2', sender: 'יואב', message: 'יש ביוטיוב כמה ערוצים מעולים, אשלח לך לינק.' },
+      { id: '3', sender: 'ליאור', message: 'אני משתמש בסימולטור אונליין, הוא ממש עוזר להבין את הקצב.' },
+      { id: '4', sender: 'ענבל', message: 'תודה! אני אבדוק את זה.' },
+    ],
+  },
+  {
+    id: 5,
+    title: 'טיפים להתמודדות עם מצבי לחץ',
+    messages: [
+      { id: '1', sender: 'יעל', message: 'איך אתם מתמודדים עם לחץ בזמן החייאה?' },
+      { id: '2', sender: 'אורי', message: 'חשוב לנשום עמוק ולהתמקד בשלבים בצורה ברורה.' },
+      { id: '3', sender: 'ניר', message: 'אני מזכיר לעצמי שהכי חשוב לנסות, גם אם זה לא מושלם.' },
+      { id: '4', sender: 'יעל', message: 'תודה על הטיפים, זה בהחלט עוזר!' },
+    ],
+  },
+  {
+    id: 6,
+    title: 'קידום הדרכות החייאה בבתי ספר',
+    messages: [
+      { id: '1', sender: 'אורי', message: 'למה לא מתחילים ללמד החייאה בבתי ספר?' },
+      { id: '2', sender: 'יעל', message: 'רעיון טוב, אולי נתחיל עם כיתות גבוהות.' },
+      { id: '3', sender: 'ניר', message: 'אני חושב שזה רעיון חשוב מאוד.' },
+    ],
+  },
+  {
+    id: 7,
+    title: 'שימוש בטכנולוגיה בלמידת החייאה',
+    messages: [
+      { id: '1', sender: 'ליאור', message: 'איך אפשר לשלב טכנולוגיה מתקדמת בלמידת החייאה?' },
+      { id: '2', sender: 'יואב', message: 'אפשר ליצור סימולטורים עם משוב בזמן אמת.' },
+      { id: '3', sender: 'ענבל', message: 'גם VR יכול לעזור ללמידה אינטראקטיבית.' },
+    ],
+  },
+];

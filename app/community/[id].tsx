@@ -3,6 +3,7 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
@@ -41,7 +42,7 @@ export default function Community() {
         <BackArrow />
         <Text style={styles.header}>{card?.title || 'No Title Available'}</Text>
 
-        <ScrollToTopContainer contentContainerStyle={styles.chatContainer}>
+        <ScrollView contentContainerStyle={styles.chatContainer}>
           {messages.map((msg) => (
             <View
               key={msg.id}
@@ -54,7 +55,7 @@ export default function Community() {
               <Text style={styles.messageText}>{msg.message}</Text>
             </View>
           ))}
-        </ScrollToTopContainer>
+        </ScrollView>
 
         <CustomInput
           sendInput={true}
