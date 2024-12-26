@@ -1,123 +1,163 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import { Audio } from 'expo-av';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Modal,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { useRouter } from 'expo-router';
+import * as Animatable from 'react-native-animatable';
+import { LinearGradient } from 'expo-linear-gradient';
+import Effy from './ui/Effy';
 
-type CallProps = {
+interface CallProps {
   visible: boolean;
+  message?: string;
+  id ?: string;
 };
 
-const Call: React.FC<CallProps> = ({ visible }) => {
+const { width } = Dimensions.get('window');
+
+export default function Call({
+  visible,
+  message = 'יש אירוע חירום במיקומך',
+  id = '11'
+}: CallProps) {
   const router = useRouter();
   const [myVisibility, setVisibility] = useState(visible);
 
   useEffect(() => {
-    let sound: Audio.Sound | null = null;
-
-    const playAlertSound = async () => {
-      try {
-        sound = new Audio.Sound();
-        await sound.loadAsync(require('@/assets/alarm.mp3')); // Ensure the file path is correct
-        await sound.setIsLoopingAsync(true);
-        await sound.playAsync();
-      } catch (error) {
-        console.error('Error playing sound:', error);
-      }
-    };
-
-    if (visible) {
-      // playAlertSound();
-    }
-
-    return () => {
-      if (sound) {
-        sound.stopAsync().catch(console.error); // Ensure the sound stops safely
-        sound.unloadAsync().catch(console.error); // Ensure the sound is unloaded
-      }
-    };
+    setVisibility(visible);
   }, [visible]);
 
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={myVisibility}
       onRequestClose={() => setVisibility(false)}
     >
       <View style={styles.overlay}>
-        <View style={styles.container}>
-          <Text style={styles.message}>יש אירוע החייאה בקרבתך</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.acceptButton}
-              onPress={() => {
-                router.push({
-                  pathname: '/emergency',
-                  params: { id: '11' },
-                });
-                setVisibility(false);
-              }}
-            >
-              <Text style={styles.buttonText}>קבל</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.declineButton}
-              onPress={() => setVisibility(false)}
-            >
-              <Text style={styles.buttonText}>דחה</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Animatable.View
+          animation="bounceIn"
+          duration={800}
+          style={styles.container}
+        >
+          <LinearGradient
+            colors={['#ff9a9e', '#fad0c4']}
+            style={styles.gradient}
+          >
+            <Effy feeling="worried" />
+            <Text style={styles.message}>
+                {message}
+            </Text>
+            <View style={styles.buttonContainer}>
+              <Animatable.View
+                animation="pulse"
+                iterationCount="infinite"
+                duration={1500}
+                easing="ease-in-out"
+                style={styles.acceptButtonWrapper}
+              >
+                <TouchableOpacity
+                  style={styles.acceptButton}
+                  onPress={() => {
+                    router.push({
+                      pathname: '/emergency',
+                      params: { id: id },
+                    });
+                    setVisibility(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>קבל</Text>
+                </TouchableOpacity>
+              </Animatable.View>
+              <TouchableOpacity
+                style={styles.declineButton}
+                onPress={() => setVisibility(false)}
+              >
+                <Text style={styles.buttonText}>דחה</Text>
+              </TouchableOpacity>
+            </View>
+          </LinearGradient>
+        </Animatable.View>
       </View>
     </Modal>
   );
-};
-
-export default Call;
+}
 
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   container: {
-    width: '80%',
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    width: width * 0.8,
+    borderRadius: 15,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 8,
+  },
+  gradient: {
     padding: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   message: {
-    fontSize: 18,
-    color: '#333',
+    fontSize: 20,
+    color: '#fff',
     textAlign: 'center',
     marginBottom: 20,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   buttonContainer: {
     flexDirection: 'row',
-    width: '100%',
     justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 15,
+  },
+  acceptButtonWrapper: {
+    flex: 1,
+    marginRight: 5,
+    zIndex: 1,
   },
   acceptButton: {
-    flex: 1,
     backgroundColor: '#4CAF50',
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginRight: 5,
+    paddingVertical: 12,
+    borderRadius: 8,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 6,
   },
   declineButton: {
     flex: 1,
     backgroundColor: '#f44336',
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginLeft: 5,
+    paddingVertical: 12,
+    borderRadius: 8,
     alignItems: 'center',
+    marginLeft: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 6,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
   },
 });
