@@ -67,7 +67,6 @@ export default function ProfileScreen() {
 
   // Convert milliseconds to days, hours, minutes, etc.
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-  alert('Your streak is ' + diffInDays + ' days.');
   setStreak(2);
 
   const badges: Badge[] = [
