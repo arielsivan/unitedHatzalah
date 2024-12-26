@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Express Server</title>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>Welcome to Express Server</h1>
-  <p>This is a simple server presenting HTML, CSS, and JS files.</p>
-  <button onclick="showAlert()">Click Me</button>
-  <script src="js/script.js"></script>
+    <div class="form-container" id="form-container">
+        <h2>קובץ קריאה חדשה</h2>
+        <select class="button dropdown" id="skill-dropdown" title="בחר מיומנות">
+            <option value="" disabled selected hidden>תבחר מיומנות</option>
+            <option value="Skill1">פגיעות לב</option>
+            <option value="Skill2">פגיעות ראש</option>
+            <option value="Skill3">דימום</option>
+        </select>
+        <input type="text" class="button" id="location-search" placeholder="הכנס כתובת מדויקת">
+        <button class="create-button" id="create-button">צור קריאה</button>
+    </div>
+    <div class="success-container hidden" id="success-container">
+        <p>הקריאה נוצרה בהצלחה</p>
+        <button class="button" id="new-call-button">צור קריאה חדשה</button>
+    </div>
+    <script src="js/script.js"></script>
 </body>
 </html>
